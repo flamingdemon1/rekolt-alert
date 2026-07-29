@@ -1,0 +1,98 @@
+[
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "After the heavy rain yesterday, water stayed in my field and many plants have fallen.",
+    "uncertain_segments": [],
+    "case_id": "translation-001",
+    "source_text": "Apre gro lapli yer, delo inn res dan mo karo ek boukou plant inn tonbe."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "Water has risen in the field and the roots of the plants are still under water.",
+    "uncertain_segments": [],
+    "case_id": "translation-002",
+    "source_text": "Delo inn mont dan karo ek rasinn bann plant ankor anba delo."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "My leaves are turning yellow and there are small holes on them.",
+    "uncertain_segments": [],
+    "case_id": "translation-003",
+    "source_text": "Mo bann fey pe vinn zonn ek ena ti trou lor zot."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "Wind has broken the branches in my field.",
+    "uncertain_segments": [],
+    "case_id": "translation-004",
+    "source_text": "Divan for inn kas bann brans dan mo karo."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "It hasn't rained for several days and the soil is dry.",
+    "uncertain_segments": [],
+    "case_id": "translation-005",
+    "source_text": "Pa finn gagn lapli depi plizier zour ek later inn sek."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "There are many small insects eating the leaves of my plants.",
+    "uncertain_segments": [],
+    "case_id": "translation-006",
+    "source_text": "Ena boukou ti bebet pe manz fey mo bann plant."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "I am planting tomatoes in Flacq and there are black spots on the leaves.",
+    "uncertain_segments": [],
+    "case_id": "translation-007",
+    "source_text": "Mo pe plant tomat dan Flacq ek ena tas nwar lor bann fey."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "I need help quickly because the problem is spreading in the field.",
+    "uncertain_segments": [],
+    "case_id": "translation-008",
+    "source_text": "Mo bizin led vit parski problem-la pe fane dan karo."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "My tomato plants have black spots on the leaves.",
+    "uncertain_segments": [],
+    "case_id": "translation-009",
+    "source_text": "Mo bann plant tomat ena bann tas nwar lor fey."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "The leaves are turning yellow and the plant is not growing well.",
+    "uncertain_segments": [],
+    "case_id": "translation-010",
+    "source_text": "Bann fey kann pe vinn zonn ek plant-la pa pe grandi bien."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "After the rain, there is a white powdery growth on the cucumber leaves.",
+    "uncertain_segments": [],
+    "case_id": "translation-011",
+    "source_text": "Apre lapli, ena enn lapous blan lor bann fey konkonm."
+  },
+  {
+    "source_language": "mfe",
+    "target_language": "en",
+    "translated_text": "Do I need to separate the sick plants from the other plants?",
+    "uncertain_segments": [],
+    "case_id": "translation-012",
+    "source_text": "Eski mo bizin separ bann plant ki malad ar lezot plant?"
+  }
+]
