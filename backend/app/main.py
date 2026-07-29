@@ -1,27 +1,31 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# 1. Import your secure settings profile and errors from your assigned scope
 from backend.app.config import settings
-from backend.app.errors import GemmaPipelineException, gemma_exception_handler, general_http_exception_handler
 from backend.app.tools.weather_tool import GeoWeatherEngine
 
-# 2. Initialize the core FastAPI app instance
+# 1. Initialize the FastAPI app instance
 app = FastAPI(title=settings.PROJECT_NAME)
 
-# 3. Register global exception handlers
-app.add_exception_handler(GemmaPipelineException, gemma_exception_handler)
-app.add_exception_handler(HTTPException, general_http_exception_handler)
+# 2. Web Cross-Origin Configuration (Allows the website to make requests to the API)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# 4. Define the incoming request data structure
+# 3. Instantiate the standalone core weather engine
+weather_engine = GeoWeatherEngine()
+
+# 4. Define the incoming request data structure for the website
 class WeatherRequest(BaseModel):
     latitude: float
     longitude: float
 
-# 5. Instantiate the standalone core weather engine
-weather_engine = GeoWeatherEngine()
-
-# 6. Expose the route directly on the core app instance
+# 5. Expose the weather assessment route directly
 @app.post(f"{settings.API_V1_STR}/weather", tags=["Weather"])
 async def get_weather_assessment(payload: WeatherRequest):
     result = weather_engine.fetch_and_assess(payload.latitude, payload.longitude)

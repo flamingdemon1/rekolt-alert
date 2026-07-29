@@ -31,3 +31,5 @@ reports/generated/
 *.code-workspace
 .DS_Store
 Thumbs.db
+
+kaggle.json
