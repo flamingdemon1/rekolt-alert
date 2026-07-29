@@ -2,7 +2,7 @@
 
 Rekolt Alert is the working title for a Creole-accessible crop early-warning assistant for Mauritian small farmers, prepared for **Build with Gemma: Blue Mauritius & Beyond**.
 
-The intended experience will let a farmer share crop images, describe a situation in Mauritian Creole, French, or English, answer follow-up questions, and receive an AI-assisted preliminary risk report.
+The intended experience will let a farmer share crop images, describe a situation in Mauritian Creole or English, answer follow-up questions, and receive an AI-assisted preliminary risk report.
 
 > **Current status:** repository foundation only. No application features, AI integration, API, dashboard, or report generation have been implemented.
 

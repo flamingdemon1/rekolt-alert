@@ -2,7 +2,7 @@
 
 ## Concept
 
-Rekolt Alert is planned as a Creole-accessible crop early-warning assistant for Mauritian small farmers. A farmer may eventually submit crop images, explain the situation in Mauritian Creole, French, or English, answer follow-up questions, and receive an AI-assisted preliminary risk report.
+Rekolt Alert is planned as a Creole-accessible crop early-warning assistant for Mauritian small farmers. A farmer may eventually submit crop images, explain the situation in Mauritian Creole or English, answer follow-up questions, and receive an AI-assisted preliminary risk report.
 
 ## Foundation phase
 

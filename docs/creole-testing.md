@@ -63,12 +63,12 @@ Future checks should use recordings that are not included as prompt examples.
 They should cover:
 
 - natural Morisien crop descriptions
-- code-switching with French and English
+- English code-switching and incidental French words within Morisien speech
 - multiple speakers and microphone qualities
 - different spellings and phrasing for the same meaning
 - ambiguous statements requiring follow-up questions
 - urgent situations and safe uncertainty handling
-- consistency across `mfe`, `fr`, and `en`
+- consistency across the supported `mfe` and `en` paths
 
 Do not use private farmer information. Any future fine-tuning dataset must be
 kept separate from the validation and final test recordings.

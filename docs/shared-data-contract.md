@@ -7,7 +7,7 @@ The following JSON shape is a proposal only. It is not implemented, validated, o
 ```json
 {
   "case_id": "string",
-  "language": "mfe | fr | en",
+  "language": "mfe | en",
   "crop": "string",
   "location": {
     "district": "string",

@@ -4,7 +4,7 @@ This is an outline only; claims and results must be added only after they are ve
 
 1. Project title and one-sentence summary
 2. Mauritian small-farmer problem and intended users
-3. Language accessibility: Mauritian Creole, French, and English
+3. Language accessibility: Mauritian Creole and English
 4. User journey and UX decisions
 5. Technical architecture
 6. Gemma integration and prompt approach
