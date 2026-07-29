@@ -13,7 +13,7 @@ This is a planning checklist; no tests or features are currently implemented.
 - [ ] No secret, private data, upload, or generated report is included
 - [ ] Error, empty, loading, and recovery states are considered
 - [ ] Keyboard use, labels, focus order, contrast, and responsive behaviour are checked where relevant
-- [ ] Mauritian Creole, French, and English paths are checked where relevant
+- [ ] Mauritian Creole and English paths are checked where relevant
 - [ ] Safety wording does not claim a guaranteed diagnosis
 
 ## Before the demo
