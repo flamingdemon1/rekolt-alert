@@ -40,6 +40,24 @@ The reviewed outputs are stored in
 requested JSON object in a one-item list, so production code must validate the
 response schema rather than assuming well-formed model output.
 
+## Text-to-speech pilot
+
+The official `facebook/mms-tts-mfe` Morisien checkpoint produced clear and
+understandable speech, although its default rhythm contained excessive pauses.
+The selected settings use a speaking rate of `1.15`, duration randomness of
+`0.40`, and noise scale of `0.60`.
+
+A natural Morisien calibration recording measured comma pauses of 526 ms and
+477 ms, and a sentence pause of 716 ms. The service therefore uses a 500 ms
+comma pause and a 700 ms sentence pause, while compressing model-generated
+internal silences longer than 180 ms to 90 ms. These values calibrate rhythm;
+they do not fine-tune the model or clone the speaker's voice.
+
+The runtime implementation lives in
+`backend/app/services/tts_service.py`. It loads model weights only when speech
+is requested. The backend team must add compatible `torch`, `transformers`,
+and `numpy` runtime dependencies when integrating the service into deployment.
+
 ## Agreed workflow
 
 The application must treat speech recognition as a draft:
@@ -70,6 +88,8 @@ The deterministic word-boundary correction lives in
 The current MMS checkpoint is `facebook/mms-1b-all` with the `mfe` adapter. Its
 model card lists the licence as CC BY-NC 4.0. The team must include attribution
 and confirm competition and deployment compatibility before final submission.
+The `facebook/mms-tts-mfe` checkpoint uses the same CC BY-NC 4.0 licence and
+requires the same review.
 
 ## Further evaluation
 
