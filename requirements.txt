@@ -1,0 +1,1 @@
+# Runtime dependencies will be added by the backend team once the official Gemma integration method is confirmed.
