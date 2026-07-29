@@ -26,6 +26,20 @@ meaning. MMS retained meaning more consistently, but still merged words and
 made spelling errors across speakers and microphones. These clips were used
 for evaluation only; they did not train or fine-tune either model.
 
+## Translation pilot
+
+The 12 farmer-confirmed Morisien statements were translated into English with
+the hosted `gemma-4-26b-a4b-it` model. Human review found that all 12 outputs
+preserved the intended agricultural meaning. A separate English-to-Morisien
+check showed that the prompt must explicitly preserve `bann` for plural nouns
+and `pe` for ongoing actions; the revised prompt then produced the expected
+standard Morisien sentence.
+
+The reviewed outputs are stored in
+`data/demo/translation_evaluation_results.json`. One API response wrapped the
+requested JSON object in a one-item list, so production code must validate the
+response schema rather than assuming well-formed model output.
+
 ## Agreed workflow
 
 The application must treat speech recognition as a draft:
