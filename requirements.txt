@@ -1,1 +1,3 @@
-# Runtime dependencies will be added by the backend team once the official Gemma integration method is confirmed.
+google-genai==0.1.1
+pydantic-settings==2.4.0
+python-dotenv==1.0.1
