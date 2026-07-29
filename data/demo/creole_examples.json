@@ -1,0 +1,86 @@
+[
+  {
+    "audio_file": "mfe-001.wav",
+    "expected_transcript": "Apre gro lapli yer, delo inn res dan mo karo ek boukou plant inn tonbe.",
+    "model_transcript": "apre gro lapliyer delo in reste mon karo ek beaucoup plante in tombé",
+    "result": "partial",
+    "notes": "Meaning mostly retained, but several words were normalized into French-like spelling."
+  },
+  {
+    "audio_file": "mfe-002.wav",
+    "expected_transcript": "Delo inn mont dan karo ek rasinn bann plant ankor anba delo.",
+    "model_transcript": "Delo in mond dakaro ek crassin bann plante anko anba delo",
+    "result": "partial",
+    "notes": "Core flooding context retained, with word merging and consonant errors."
+  },
+  {
+    "audio_file": "mfe-003.wav",
+    "expected_transcript": "Mo bann fey pe vinn zonn ek ena ti trou lor zot.",
+    "model_transcript": "bou bann fey pe vin zone ek ena chi trou loze",
+    "result": "fail",
+    "notes": "Some crop symptoms were recognizable, but important words were lost or changed."
+  },
+  {
+    "audio_file": "mfe-004.wav",
+    "expected_transcript": "Divan for inn kas bann brans dan mo karo.",
+    "model_transcript": "divan fo in cas ban bons domo karo",
+    "result": "fail",
+    "notes": "The model followed the sounds but did not preserve several key Morisien words."
+  },
+  {
+    "audio_file": "mfe-005.wav",
+    "expected_transcript": "Pa finn gagn lapli depi plizier zour ek later inn sek.",
+    "model_transcript": "Pa finn gàn lapli depi plizye zour ek klater in sèk",
+    "result": "partial",
+    "notes": "Meaning retained with minor omissions, merging, and spelling differences."
+  },
+  {
+    "audio_file": "mfe-006.wav",
+    "expected_transcript": "Ena boukou ti bebet pe manz fey mo bann plant.",
+    "model_transcript": "Ena boukou ti bebet pay mens fey mo bann plante",
+    "result": "partial",
+    "notes": "The overall meaning was retained, but the verb phrase was transcribed incorrectly."
+  },
+  {
+    "audio_file": "mfe-007.wav",
+    "expected_transcript": "Mo pe plant tomat dan Flacq ek ena tas nwar lor bann fey.",
+    "model_transcript": "Pou b'plant domat dan flac ek ena tas noir lou ban fey",
+    "result": "partial",
+    "notes": "Crop, location, and symptom were recognizable, with French normalization and sound errors."
+  },
+  {
+    "audio_file": "mfe-008.wav",
+    "expected_transcript": "Mo bizin led vit parski problem-la pe fane dan karo.",
+    "model_transcript": "Ou bizalite vite parce qu'il problème la pépine de carao. Je fais fan.",
+    "result": "fail",
+    "notes": "The output changed into French-like text and did not reliably preserve the statement."
+  },
+  {
+    "audio_file": "mfe-009.wav",
+    "expected_transcript": "Mo bann plant tomate ena bann taches noires lor fey.",
+    "model_transcript": "w ban plant tomate ena ban tas no lo vei",
+    "result": "partial",
+    "notes": "Most of the mixed-language crop symptom remained recognizable, but words were dropped."
+  },
+  {
+    "audio_file": "mfe-010.wav",
+    "expected_transcript": "Bann fey kann pe vinn zonn ek plant-la pa pe grandi bien.",
+    "model_transcript": "Ban fey kan pe vin zone ek plant la papy grand di bien",
+    "result": "partial",
+    "notes": "The main meaning was retained with merging and French-like spelling."
+  },
+  {
+    "audio_file": "mfe-011.wav",
+    "expected_transcript": "Apre lapli, ena enn lapous blan lor bann fey konkonm.",
+    "model_transcript": "Aqila pli ena la pous blanc lou banfek kukun",
+    "result": "partial",
+    "notes": "White growth and cucumber context were partly recognizable, but several words were distorted."
+  },
+  {
+    "audio_file": "mfe-012.wav",
+    "expected_transcript": "Eski mo bizin separ bann plant ki malad ar lezot plant?",
+    "model_transcript": "mi mbiz ase ba bann plant ki malad o lese plant",
+    "result": "fail",
+    "notes": "The sick-plant context remained, but the question and separation request were not reliable."
+  }
+]
