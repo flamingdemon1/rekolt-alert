@@ -1,3 +1,351 @@
-<!-- Farmer-facing page.
-TODO (Fahim): Build the main input experience after the UX flow and shared data contract are agreed.
--->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Share crop concerns with Rekolt Alert for an AI-assisted preliminary risk check."
+    >
+    <title>Crop check | Rekolt Alert</title>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body data-api-endpoint="">
+    <a class="skip-link" href="#main-content">Skip to the crop form</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Rekolt Alert home">
+        <span class="brand-mark" aria-hidden="true">R</span>
+        <span>
+          <strong>Rekolt</strong>
+          <small>Alert</small>
+        </span>
+      </a>
+      <p class="header-label">Preliminary crop check</p>
+    </header>
+
+    <main id="main-content">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Made for Mauritian growers</p>
+        <h1 id="page-title">Show us what is happening to your crop.</h1>
+        <p class="intro-copy">
+          Add a clear photo and describe what you have noticed. You can type or
+          record a short voice note.
+        </p>
+        <div class="safety-note" role="note">
+          <span class="safety-icon" aria-hidden="true">i</span>
+          <p>
+            <strong>This is an early-warning assistant.</strong>
+            Any result is preliminary guidance, not a confirmed diagnosis or a
+            replacement for qualified agricultural advice.
+          </p>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <nav class="progress" aria-label="Crop check progress">
+          <ol>
+            <li class="progress-step is-active" data-progress-step="details" aria-current="step">
+              <span>1</span>
+              <div>
+                <strong>Your crop</strong>
+                <small>Photo and details</small>
+              </div>
+            </li>
+            <li class="progress-line" aria-hidden="true"></li>
+            <li class="progress-step" data-progress-step="review">
+              <span>2</span>
+              <div>
+                <strong>Review</strong>
+                <small>Check before sending</small>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
+        <section class="form-card" data-panel="details" aria-labelledby="details-title">
+          <div class="card-heading">
+            <div>
+              <p class="step-kicker">Step 1 of 2</p>
+              <h2 id="details-title">Tell us about your crop</h2>
+            </div>
+            <p><span aria-hidden="true">*</span> Required</p>
+          </div>
+
+          <div class="error-summary" data-error-summary role="alert" hidden>
+            <strong>Please check the highlighted fields.</strong>
+            <ul data-error-list></ul>
+          </div>
+
+          <form id="crop-intake-form" novalidate>
+            <fieldset class="field-group language-group">
+              <legend>Language for your report <span aria-hidden="true">*</span></legend>
+              <p class="field-hint">Choose the language you are most comfortable using.</p>
+              <div class="language-options">
+                <label class="choice-card">
+                  <input type="radio" name="language" value="mfe" checked>
+                  <span>
+                    <strong>Kreol Morisien</strong>
+                    <small>Kreol</small>
+                  </span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="language" value="fr">
+                  <span>
+                    <strong>Français</strong>
+                    <small>French</small>
+                  </span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="language" value="en">
+                  <span>
+                    <strong>English</strong>
+                    <small>English</small>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="field-group" data-field="crop_image">
+              <label class="field-label" for="crop-image">
+                Crop photo <span aria-hidden="true">*</span>
+              </label>
+              <p class="field-hint" id="image-help">
+                Use one clear, well-lit photo. JPG, PNG or WebP, up to 10 MB.
+              </p>
+
+              <div class="upload-zone" data-drop-zone>
+                <input
+                  class="file-input"
+                  id="crop-image"
+                  name="crop_image"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  capture="environment"
+                  aria-describedby="image-help image-error"
+                  required
+                >
+                <div class="upload-empty" data-upload-empty>
+                  <span class="upload-symbol" aria-hidden="true"></span>
+                  <div>
+                    <strong>Take a photo or choose one</strong>
+                    <p>Tap to open your camera or photo library.</p>
+                  </div>
+                  <span class="button button-secondary" aria-hidden="true">Choose photo</span>
+                </div>
+
+                <div class="upload-preview" data-upload-preview hidden>
+                  <img data-image-preview alt="">
+                  <div class="upload-file-details">
+                    <strong data-image-name></strong>
+                    <small data-image-size></small>
+                  </div>
+                  <button class="text-button" type="button" data-remove-image>
+                    Remove
+                  </button>
+                </div>
+              </div>
+              <p class="field-error" id="image-error" data-error-for="crop_image"></p>
+            </div>
+
+            <div class="two-column-fields">
+              <div class="field-group">
+                <label class="field-label" for="crop-name">Crop name</label>
+                <p class="field-hint" id="crop-help">If you know it.</p>
+                <input
+                  class="text-input"
+                  id="crop-name"
+                  name="crop"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="For example, tomato"
+                  aria-describedby="crop-help"
+                >
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="crop-location">Village or locality</label>
+                <p class="field-hint" id="location-help">Optional. Do not enter a full address.</p>
+                <input
+                  class="text-input"
+                  id="crop-location"
+                  name="locality"
+                  type="text"
+                  autocomplete="address-level2"
+                  placeholder="For example, Moka"
+                  aria-describedby="location-help"
+                >
+              </div>
+            </div>
+
+            <div class="field-group" data-field="farmer_statement">
+              <div class="label-row">
+                <label class="field-label" for="farmer-statement">
+                  What have you noticed? <span aria-hidden="true">*</span>
+                </label>
+                <span class="character-count" data-character-count>0 / 600</span>
+              </div>
+              <p class="field-hint" id="statement-help">
+                Mention when it started, which part of the plant is affected,
+                and whether it is spreading.
+              </p>
+              <textarea
+                class="text-input text-area"
+                id="farmer-statement"
+                name="farmer_statement"
+                rows="5"
+                maxlength="600"
+                placeholder="For example: The lower leaves started turning yellow three days ago..."
+                aria-describedby="statement-help statement-error"
+                required
+              ></textarea>
+              <p
+                class="field-error"
+                id="statement-error"
+                data-error-for="farmer_statement"
+              ></p>
+            </div>
+
+            <section class="voice-panel" aria-labelledby="voice-title">
+              <div class="voice-heading">
+                <span class="voice-symbol" aria-hidden="true"></span>
+                <div>
+                  <h3 id="voice-title">Add a voice note</h3>
+                  <p>Optional. Speak for up to 60 seconds in your preferred language.</p>
+                </div>
+              </div>
+
+              <div class="voice-controls" data-voice-idle>
+                <button class="button button-secondary" type="button" data-start-recording>
+                  Start recording
+                </button>
+                <span>Your browser will ask for microphone permission.</span>
+              </div>
+
+              <div class="recording-state" data-voice-recording hidden>
+                <span class="recording-dot" aria-hidden="true"></span>
+                <strong>Recording</strong>
+                <time data-recording-time datetime="PT0S">00:00</time>
+                <button class="button button-dark" type="button" data-stop-recording>
+                  Stop
+                </button>
+              </div>
+
+              <div class="audio-preview" data-audio-preview hidden>
+                <audio controls data-audio-player></audio>
+                <button class="text-button" type="button" data-remove-audio>
+                  Remove voice note
+                </button>
+              </div>
+
+              <p class="voice-status" data-voice-status aria-live="polite">
+                Your recording stays on this device until you choose to send it.
+              </p>
+            </section>
+
+            <div class="privacy-note">
+              <span aria-hidden="true">✓</span>
+              <p>
+                <strong>Protect your privacy.</strong>
+                Do not include your full address, phone number, or other private
+                information.
+              </p>
+            </div>
+
+            <div class="form-actions">
+              <button class="button button-primary button-large" type="submit">
+                Review my information
+                <span aria-hidden="true">→</span>
+              </button>
+              <p>Nothing is sent during this step.</p>
+            </div>
+          </form>
+        </section>
+
+        <section
+          class="form-card review-card"
+          data-panel="review"
+          aria-labelledby="review-title"
+          hidden
+        >
+          <div class="card-heading review-heading">
+            <div>
+              <p class="step-kicker">Step 2 of 2</p>
+              <h2 id="review-title">Check your information</h2>
+              <p>Make sure the photo and details are clear before sending.</p>
+            </div>
+            <button class="button button-secondary" type="button" data-edit-details>
+              Edit details
+            </button>
+          </div>
+
+          <div class="review-grid">
+            <article class="review-image-card">
+              <img data-review-image alt="Selected crop">
+              <div>
+                <span>Crop photo</span>
+                <strong data-review-image-name></strong>
+              </div>
+            </article>
+
+            <dl class="review-details">
+              <div>
+                <dt>Report language</dt>
+                <dd data-review-language></dd>
+              </div>
+              <div>
+                <dt>Crop</dt>
+                <dd data-review-crop></dd>
+              </div>
+              <div>
+                <dt>Locality</dt>
+                <dd data-review-location></dd>
+              </div>
+              <div class="review-statement">
+                <dt>What you noticed</dt>
+                <dd data-review-statement></dd>
+              </div>
+              <div>
+                <dt>Voice note</dt>
+                <dd data-review-audio></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="connection-notice" data-connection-notice role="status">
+            <span aria-hidden="true">!</span>
+            <div>
+              <strong>Analysis connection pending</strong>
+              <p>
+                Your information has not been sent. The backend route must be
+                configured before analysis can start.
+              </p>
+            </div>
+          </div>
+
+          <div class="submit-status" data-submit-status aria-live="polite" hidden></div>
+
+          <div class="review-actions">
+            <button
+              class="button button-primary button-large"
+              type="button"
+              data-send-analysis
+              disabled
+            >
+              Send for preliminary check
+              <span aria-hidden="true">→</span>
+            </button>
+            <p>Submitting does not provide a confirmed diagnosis.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p><strong>Rekolt Alert</strong> · Built for Mauritian small farmers</p>
+      <p>For urgent or severe crop problems, contact a qualified agricultural adviser.</p>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
