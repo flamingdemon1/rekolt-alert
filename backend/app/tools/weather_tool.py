@@ -1,98 +1,121 @@
+"""Coordinate-based Open-Meteo assessment without demo-location fallbacks."""
+
+from typing import Any
+
 import requests
-from typing import Dict, Any
+
 
 class GeoWeatherEngine:
+    """Retrieve weather only for caller-supplied or real IP coordinates."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_url = "https://api.open-meteo.com/v1/forecast"
-        self.fallback_lat = -20.1609
-        self.fallback_lon = 57.5012
 
-    def get_user_location(self) -> tuple[float, float]:
-        """
-        Attempts to find the user's live physical location parameters via IP geolocation.
-        Asks for confirmation in the terminal. If denied or failed, falls back to PL.
-        """
-        user_choice = input("Allow this application to access your exact location? (yes/no): ").strip().lower()
-        
-        if user_choice in ['y', 'yes']:
-            try:
-                # Querying a free geolocation endpoint to resolve current coordinates
-                geo_resp = requests.get("https://ipapi.co/json/", timeout=5)
-                geo_resp.raise_for_status()
-                geo_data = geo_resp.json()
-                
-                lat = float(geo_data.get("latitude"))
-                lon = float(geo_data.get("longitude"))
-                print(f"📡 Location matched successfully: Lat {lat}, Lon {lon}")
-                return lat, lon
-            except Exception as e:
-                print(f"⚠️ Geolocation request failed ({e}). Falling back to default region: Poland.")
-        else:
-            print("🔒 Location access denied by user. Defaulting parameters to Poland.")
-            
-        return self.fallback_lat, self.fallback_lon
+    def get_user_location(self) -> tuple[float, float] | None:
+        """Return an explicitly approved approximate IP location, if available."""
 
-    def fetch_and_assess(self, lat: float, lon: float) -> Dict[str, Any]:
-        """Queries weather analytics and returns an environmental agricultural assessment."""
+        user_choice = input(
+            "Allow approximate IP location? (yes/no): "
+        ).strip().lower()
+        if user_choice not in {"y", "yes"}:
+            print("Location access was not approved.")
+            return None
+
+        try:
+            response = requests.get("https://ipapi.co/json/", timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            latitude = float(data["latitude"])
+            longitude = float(data["longitude"])
+        except (
+            KeyError,
+            TypeError,
+            ValueError,
+            requests.RequestException,
+        ) as error:
+            print(f"Approximate location is unavailable: {error}")
+            return None
+
+        print(
+            "Approximate IP location received: "
+            f"Lat {latitude}, Lon {longitude}"
+        )
+        return latitude, longitude
+
+    def fetch_and_assess(
+        self,
+        lat: float,
+        lon: float,
+    ) -> dict[str, Any]:
+        """Return an agricultural weather assessment for exact coordinates."""
+
         url = (
             f"{self.base_url}?latitude={lat}&longitude={lon}"
-            f"&current=temperature_2m,relative_humidity_2m,precipitation"
-            f"&timezone=auto"
+            "&current=temperature_2m,relative_humidity_2m,precipitation"
+            "&timezone=auto"
         )
-        
+
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
-            data = response.json()
-            
-            current = data.get("current", {})
-            temp = current.get("temperature_2m", 20.0)
-            humidity = current.get("relative_humidity_2m", 50)
-            precip = current.get("precipitation", 0.0)
-            
-            if precip > 0.5:
+            current = response.json()["current"]
+            temperature = float(current["temperature_2m"])
+            humidity = float(current["relative_humidity_2m"])
+            precipitation = float(current["precipitation"])
+
+            if precipitation > 0.5:
                 status = "critical"
-                assessment = "🚨 CRITICAL ALERT: Heavy precipitation tracked. Risk of field flooding or nutrient runoff."
-            elif temp > 35.0:
+                assessment = (
+                    "Heavy precipitation detected. Field flooding or nutrient "
+                    "runoff may be possible."
+                )
+            elif temperature > 35:
                 status = "warning"
-                assessment = "⚠️ HEAT WARNING: High temperature. Check irrigation arrays."
-            elif humidity > 85 and temp > 20.0:
+                assessment = (
+                    "High temperature detected. Check irrigation and crop "
+                    "heat stress."
+                )
+            elif humidity > 85 and temperature > 20:
                 status = "warning"
-                assessment = "⚠️ RISK FOR FUNGAL INFECTION: Warm, highly humid conditions detected. Favorable for fungal activation."
+                assessment = (
+                    "Warm, humid conditions may increase fungal risk."
+                )
             else:
                 status = "nominal"
-                assessment = "✅ SYSTEM NOMINAL: Crop parameters are stable. Ambient atmosphere is favorable."
-                
+                assessment = "Current agricultural weather is stable."
+
             return {
                 "status": status,
-                "temperature": temp,
+                "temperature": temperature,
                 "humidity": humidity,
-                "precipitation": precip,
-                "assessment": assessment
+                "precipitation": precipitation,
+                "assessment": assessment,
             }
-        except Exception as e:
+        except (
+            KeyError,
+            TypeError,
+            ValueError,
+            requests.RequestException,
+        ) as error:
             return {
                 "status": "error",
                 "temperature": 0.0,
                 "humidity": 0,
                 "precipitation": 0.0,
-                "assessment": f"Failed to sync weather parameters: {str(e)}"
+                "assessment": f"Weather service failed: {error!s}",
             }
 
-# --- Quick Test Execution ---
+
 if __name__ == "__main__":
     engine = GeoWeatherEngine()
-    
-    # 1. Resolve location based on active user prompt
-    target_lat, target_lon = engine.get_user_location()
-    
-    # 2. Extract environmental data matching those parameters
-    weather_report = engine.fetch_and_assess(target_lat, target_lon)
-    
+    coordinates = engine.get_user_location()
+    if coordinates is None:
+        raise SystemExit("No weather requested without a real location.")
+
+    weather_report = engine.fetch_and_assess(*coordinates)
     print("\n--- Weather Assessment Report ---")
     print(f"Status: {weather_report['status'].upper()}")
-    print(f"Temp: {weather_report['temperature']}°C")
+    print(f"Temperature: {weather_report['temperature']}°C")
     print(f"Humidity: {weather_report['humidity']}%")
-    print(f"Precipitation: {weather_report['precipitation']}mm")
+    print(f"Precipitation: {weather_report['precipitation']} mm")
     print(f"Analysis: {weather_report['assessment']}")

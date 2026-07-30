@@ -21,7 +21,7 @@ The MMS results in `data/demo/mms_evaluation_results.json` produced:
 - 3 failed transcriptions
 - 26.2% average word error rate
 
-Gemma E2B frequently produced French-like normalization and changed the
+Gemma E2B frequently produced non-Morisien normalization and changed the
 meaning. MMS retained meaning more consistently, but still merged words and
 made spelling errors across speakers and microphones. These clips were used
 for evaluation only; they did not train or fine-tune either model.
@@ -83,6 +83,34 @@ The reusable prompt components live in
 The deterministic word-boundary correction lives in
 `backend/app/services/language_service.py`. It must not split ambiguous words.
 
+## Turn-by-turn voice conversation
+
+The backend now exposes four language boundaries:
+
+- `POST /api/v1/language/transcribe` accepts an uncompressed PCM WAV request
+  body and returns a draft Morisien transcript.
+- `POST /api/v1/language/translate` translates farmer-confirmed text between
+  `mfe` and `en`.
+- `POST /api/v1/language/conversation/turn` accepts a confirmed transcript,
+  maintains a short volatile conversation history, and returns a preliminary
+  reply in the farmer's language.
+- `POST /api/v1/language/speech` returns calibrated Morisien WAV speech.
+
+This provides push-to-talk conversation, not continuous streaming voice. The
+frontend displays the draft transcript. The editable composer uses its send
+action for confirmation; conversation mode detects the end of speech, submits
+the utterance, speaks the reply, and resumes listening. Audio is not retained
+in conversation history. The demo store is memory-only and resets whenever the
+backend process restarts.
+
+The speech models load only when their endpoints are first called. Hosted
+Gemma calls fail with a clear service-unavailable response when
+`GEMMA_API_KEY` is missing rather than preventing the whole API from starting.
+
+The frontend must send PCM WAV audio. Browser formats such as `webm` or `m4a`
+must be converted client-side or through an approved conversion boundary
+before calling the transcription route.
+
 ## Model and licence note
 
 The current MMS checkpoint is `facebook/mms-1b-all` with the `mfe` adapter. Its
@@ -97,7 +125,7 @@ Future checks should use recordings that are not included as prompt examples.
 They should cover:
 
 - natural Morisien crop descriptions
-- English code-switching and incidental French words within Morisien speech
+- English code-switching within Morisien speech
 - multiple speakers and microphone qualities
 - different spellings and phrasing for the same meaning
 - ambiguous statements requiring follow-up questions

@@ -11,11 +11,13 @@ import re
 import wave
 from collections.abc import Mapping
 from dataclasses import dataclass, field
+from threading import Lock
 from types import MappingProxyType
 from typing import Any, Final
 
 MORISIEN_TTS_MODEL_ID: Final = "facebook/mms-tts-mfe"
 _PUNCTUATION_PATTERN: Final = re.compile(r"[^,;:.!?]+|[,;:.!?]+")
+_SINGLE_PASS_MAX_CHARACTERS: Final = 180
 
 
 @dataclass(frozen=True)
@@ -126,39 +128,63 @@ class MorisienTTSService:
         self._tokenizer: Any | None = None
         self._numpy: Any | None = None
         self._torch: Any | None = None
+        self._runtime_lock = Lock()
+        self._inference_lock = Lock()
+        self._is_warm = False
 
     def _load_runtime(self) -> None:
         """Load optional heavy dependencies and model weights on first use."""
 
         if self._model is not None:
             return
+        with self._runtime_lock:
+            if self._model is not None:
+                return
+            try:
+                import numpy
+                import torch
+                from transformers import AutoTokenizer, VitsModel
+            except ImportError as error:
+                raise RuntimeError(
+                    "Morisien TTS requires torch, transformers, and numpy"
+                ) from error
 
-        try:
-            import numpy
-            import torch
-            from transformers import AutoTokenizer, VitsModel
-        except ImportError as error:
-            raise RuntimeError(
-                "Morisien TTS requires torch, transformers, and numpy"
-            ) from error
+            tokenizer = AutoTokenizer.from_pretrained(
+                self.config.model_id
+            )
+            model = VitsModel.from_pretrained(self.config.model_id)
+            model.to(self.device)
+            model.eval()
+            model.speaking_rate = self.config.speaking_rate
+            model.noise_scale_duration = self.config.noise_scale_duration
+            model.noise_scale = self.config.noise_scale
 
-        tokenizer = AutoTokenizer.from_pretrained(self.config.model_id)
-        model = VitsModel.from_pretrained(self.config.model_id)
-        model.to(self.device)
-        model.eval()
-        model.speaking_rate = self.config.speaking_rate
-        model.noise_scale_duration = self.config.noise_scale_duration
-        model.noise_scale = self.config.noise_scale
+            self._numpy = numpy
+            self._torch = torch
+            self._tokenizer = tokenizer
+            self._model = model
 
-        self._numpy = numpy
-        self._torch = torch
-        self._tokenizer = tokenizer
-        self._model = model
+    def warm_up(self) -> None:
+        """Load and exercise the voice model before the first spoken reply."""
+
+        self._load_runtime()
+        if not self._is_warm:
+            self.synthesize_wav("Bonzour.")
 
     def synthesize_wav(self, text: str) -> bytes:
         """Return mono 16-bit WAV bytes for supplied Morisien text."""
 
         plan = build_morisien_tts_plan(text, config=self.config)
+        spoken_phrases = tuple(
+            segment for segment in plan if segment.text is not None
+        )
+        if (
+            len(spoken_phrases) <= 2
+            and len(text.strip()) <= _SINGLE_PASS_MAX_CHARACTERS
+        ):
+            # One model call is faster and lets MMS retain natural punctuation
+            # for the short replies used by voice conversation.
+            plan = (TTSSegment(text=text.strip()),)
         self._load_runtime()
 
         numpy = self._numpy
@@ -191,8 +217,9 @@ class MorisienTTSService:
             torch.manual_seed(self.config.seed + phrase_number)
             phrase_number += 1
 
-            with torch.no_grad():
+            with self._inference_lock, torch.inference_mode():
                 waveform = model(**inputs).waveform
+                self._is_warm = True
 
             phrase_audio = (
                 waveform.squeeze().detach().cpu().float().numpy()

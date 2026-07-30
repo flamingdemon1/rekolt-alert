@@ -1,4 +1,12 @@
-"""Health route module.
+"""Small health route that does not load AI model weights."""
 
-TODO (Kavish): Add the agreed health endpoint when the FastAPI application is implemented.
-"""
+from fastapi import APIRouter
+
+router = APIRouter(tags=["Health"])
+
+
+@router.get("/health")
+def health() -> dict[str, str]:
+    """Confirm that the FastAPI process can receive requests."""
+
+    return {"status": "ok"}
