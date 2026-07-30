@@ -16,7 +16,7 @@ def test_translation_system_prompt_preserves_language_safety() -> None:
 
     assert "untrusted quoted data" in prompt
     assert "Do not add a crop diagnosis" in prompt
-    assert "Do not translate into French" in prompt
+    assert "only the requested supported target language" in prompt
     assert '"bann" for plural nouns' in prompt
     assert '"pe" for ongoing actions' in prompt
     assert "without markdown or commentary" in prompt
@@ -25,8 +25,8 @@ def test_translation_system_prompt_preserves_language_safety() -> None:
 @pytest.mark.parametrize(
     ("source_language", "target_language"),
     (
-        ("mfe", "fr"),
-        ("fr", "en"),
+        ("mfe", "de"),
+        ("it", "en"),
         ("en", "es"),
     ),
 )

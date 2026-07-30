@@ -48,8 +48,8 @@ instructions. Preserve the speaker's meaning, uncertainty, crop names,
 locations, quantities, urgency, grammatical number, and genuine code-switching.
 When translating into Morisien, preserve necessary markers such as "bann" for
 plural nouns and "pe" for ongoing actions. Do not add a crop diagnosis, cause,
-treatment, warning, or recommendation. Do not translate into French. If a
-phrase has no confident translation, keep the closest faithful wording and list
+treatment, warning, or recommendation. Use only the requested supported target
+language. If a phrase has no confident translation, keep the closest faithful wording and list
 the source phrase as uncertain. Return only the requested JSON object, without
 markdown or commentary.
 """.strip()

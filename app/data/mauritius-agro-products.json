@@ -1,0 +1,748 @@
+[
+  {
+    "id": "CROP_001",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Potato",
+    "kreol_name": "Pomme de terre",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Potatoes (Tubers)",
+        "priceMUR": 90,
+        "unit": "1kg bag",
+        "note": "Plant directly into prepared furrows for sprouting."
+      },
+      "direct_planting": {
+        "form": "Pre-sprouted Seed Tubers",
+        "priceMUR": 140,
+        "unit": "1kg bag (chitted)",
+        "note": "Ready-to-grow tubers with sprouted eyes for faster emergence."
+      }
+    }
+  },
+  {
+    "id": "CROP_002",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Tomato",
+    "kreol_name": "Pomme d'amour",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 120,
+        "unit": "5g packet (~1,000 seeds)",
+        "note": "Requires seed tray germination for 3 to 4 weeks."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling (Alvéole)",
+        "priceMUR": 10,
+        "unit": "per seedling plant",
+        "note": "Ready for direct field or greenhouse transplanting."
+      }
+    }
+  },
+  {
+    "id": "CROP_003",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Eggplant / Aubergine",
+    "kreol_name": "Brinzel",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 65,
+        "unit": "5g packet",
+        "note": "Needs warm seedbed for optimal germination."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling (Alvéole)",
+        "priceMUR": 8,
+        "unit": "per seedling plant",
+        "note": "Established roots ready to plant in field beds."
+      }
+    }
+  },
+  {
+    "id": "CROP_004",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Eggplant (Large Variety)",
+    "kreol_name": "Aubergine (gros brinzel)",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 75,
+        "unit": "5g packet",
+        "note": "Sow in seed trays before field transfer."
+      },
+      "direct_planting": {
+        "form": "Potted Young Plant",
+        "priceMUR": 25,
+        "unit": "per potted plant",
+        "note": "Hardened plant ready for vigorous garden growth."
+      }
+    }
+  },
+  {
+    "id": "CROP_005",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Chilli / Hot Pepper",
+    "kreol_name": "Piment (Piment Martin / Piment Cari)",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 85,
+        "unit": "5g packet",
+        "note": "Germinates in 10-14 days; requires steady warmth."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling (Alvéole)",
+        "priceMUR": 12,
+        "unit": "per seedling plant",
+        "note": "Transplant directly to field or large pots."
+      }
+    }
+  },
+  {
+    "id": "CROP_006",
+    "category": "Seeds & Plants",
+    "subcategory": "Herb & Spice",
+    "english_name": "Coriander / Cilantro",
+    "kreol_name": "Kotomili",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Bulk Seeds",
+        "priceMUR": 45,
+        "unit": "50g seed pack",
+        "note": "Sow directly into ground; does not transplant well."
+      },
+      "direct_planting": {
+        "form": "Potted Multi-Sprout Cluster",
+        "priceMUR": 30,
+        "unit": "per small pot",
+        "note": "Instant herb pot for kitchen or immediate garden planting."
+      }
+    }
+  },
+  {
+    "id": "CROP_007",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Lemon / Lime",
+    "kreol_name": "Limon",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seedling Rootstock",
+        "priceMUR": 60,
+        "unit": "per young un-grafted plant",
+        "note": "Slower growth; takes 3-4 years to fruit."
+      },
+      "direct_planting": {
+        "form": "Grafted Potted Sapling",
+        "priceMUR": 175,
+        "unit": "per grafted plant",
+        "note": "Disease resistant; fruits earlier within 1-2 years."
+      }
+    }
+  },
+  {
+    "id": "CROP_008",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Tangerine",
+    "kreol_name": "Mandarine Lokal",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Germinated Seedling",
+        "priceMUR": 70,
+        "unit": "per small plant",
+        "note": "Grown from seed; variable fruit quality."
+      },
+      "direct_planting": {
+        "form": "Grafted Fruit Sapling",
+        "priceMUR": 190,
+        "unit": "per grafted plant",
+        "note": "Guaranteed true-to-type sweet fruit yield."
+      }
+    }
+  },
+  {
+    "id": "CROP_009",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Bitter Gourd",
+    "kreol_name": "Margoze",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 70,
+        "unit": "10g seed pack",
+        "note": "Soak seeds overnight before planting directly or in pots."
+      },
+      "direct_planting": {
+        "form": "Vining Seedling Plug",
+        "priceMUR": 15,
+        "unit": "per seedling plant",
+        "note": "Ready to plant along trellis or support frame."
+      }
+    }
+  },
+  {
+    "id": "CROP_010",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Chayote / Christophine",
+    "kreol_name": "Chouchou",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Sprouting Whole Fruit",
+        "priceMUR": 35,
+        "unit": "per sprouted fruit",
+        "note": "Bury half of the fruit in rich moist soil."
+      },
+      "direct_planting": {
+        "form": "Rooted Sprouted Plant",
+        "priceMUR": 60,
+        "unit": "per established potted vine",
+        "note": "Strong roots ready to climb immediately."
+      }
+    }
+  },
+  {
+    "id": "CROP_011",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Okra / Lady's Finger",
+    "kreol_name": "Lalo",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 55,
+        "unit": "10g seed pack",
+        "note": "Sow directly in sunny garden beds."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling (Alvéole)",
+        "priceMUR": 7,
+        "unit": "per seedling plant",
+        "note": "Avoid disturbing roots during transplanting."
+      }
+    }
+  },
+  {
+    "id": "CROP_012",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Pumpkin / Squash",
+    "kreol_name": "Giraumon",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 50,
+        "unit": "10g seed pack",
+        "note": "Plant 2-3 seeds per hill in rich soil."
+      },
+      "direct_planting": {
+        "form": "Young Vine Seedling",
+        "priceMUR": 12,
+        "unit": "per seedling plant",
+        "note": "Plant directly with ample spreading space."
+      }
+    }
+  },
+  {
+    "id": "CROP_013",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Yardlong Bean",
+    "kreol_name": "Voem",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 65,
+        "unit": "20g seed pack",
+        "note": "Direct sow next to stake or wire support."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling (Alvéole)",
+        "priceMUR": 8,
+        "unit": "per seedling plant",
+        "note": "Quick establishment along trellis netting."
+      }
+    }
+  },
+  {
+    "id": "CROP_014",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Calabash / Bottle Gourd",
+    "kreol_name": "Calebasse / Pipangaye",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 60,
+        "unit": "10g seed pack",
+        "note": "Requires soaking prior to direct ground planting."
+      },
+      "direct_planting": {
+        "form": "Plug Seedling",
+        "priceMUR": 10,
+        "unit": "per seedling plant",
+        "note": "Ready for field placement with trellis setup."
+      }
+    }
+  },
+  {
+    "id": "CROP_015",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Leafy Greens / Spinach",
+    "kreol_name": "Brede (Brede Chouchou, Brede Malabar, Brede Chine)",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 40,
+        "unit": "25g seed pack",
+        "note": "Broadcast seeds evenly on prepared beds."
+      },
+      "direct_planting": {
+        "form": "Tray of Seedlings (Barquette)",
+        "priceMUR": 50,
+        "unit": "tray of 20 mini-plugs",
+        "note": "Provides fast leaf harvest within weeks."
+      }
+    }
+  },
+  {
+    "id": "CROP_016",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Onion",
+    "kreol_name": "Onyon",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed Packet",
+        "priceMUR": 95,
+        "unit": "10g seed pack",
+        "note": "Sow in fine seedbeds; thin out gradually."
+      },
+      "direct_planting": {
+        "form": "Onion Sets / Seedlings (Onyon Ti-Brin)",
+        "priceMUR": 120,
+        "unit": "bundle of 100 sets",
+        "note": "Small bulb sets for easy planting and higher success."
+      }
+    }
+  },
+  {
+    "id": "CROP_017",
+    "category": "Seeds & Plants",
+    "subcategory": "Vegetable",
+    "english_name": "Garlic",
+    "kreol_name": "Ail",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Garlic Seed Bulbs",
+        "priceMUR": 110,
+        "unit": "250g seed bulbs",
+        "note": "Separate into individual cloves before planting."
+      },
+      "direct_planting": {
+        "form": "Pre-sprouted Cloves",
+        "priceMUR": 150,
+        "unit": "250g sprouted pack",
+        "note": "Ready cloves with active root and green tip shoots."
+      }
+    }
+  },
+  {
+    "id": "CROP_018",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Pineapple",
+    "kreol_name": "Ananas (Ananas Victoria)",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Crown / Small Offset",
+        "priceMUR": 40,
+        "unit": "per raw crown/slip",
+        "note": "Takes 18-24 months to produce fruit."
+      },
+      "direct_planting": {
+        "form": "Mature Sucker Plant",
+        "priceMUR": 150,
+        "unit": "per robust sucker plant",
+        "note": "Establishes rapidly; fruits in 12-14 months."
+      }
+    }
+  },
+  {
+    "id": "CROP_019",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Banana",
+    "kreol_name": "Banane",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Tissue Culture Micro-plant",
+        "priceMUR": 80,
+        "unit": "per small lab-grown plant",
+        "note": "Disease-free starting stock; requires nursery care."
+      },
+      "direct_planting": {
+        "form": "Rooted Rhizome Sucker",
+        "priceMUR": 220,
+        "unit": "per field sucker plant",
+        "note": "Large field-ready sucker for fast fruiting."
+      }
+    }
+  },
+  {
+    "id": "CROP_020",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Dwarf Banana",
+    "kreol_name": "Banane Zinzli",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Small Corm Planting Piece",
+        "priceMUR": 90,
+        "unit": "per un-sprouted corm",
+        "note": "Bury in rich soil; takes weeks to send up shoots."
+      },
+      "direct_planting": {
+        "form": "Potted Vigorous Plant",
+        "priceMUR": 250,
+        "unit": "per potted plant",
+        "note": "Wind-resistant compact variety ready for garden beds."
+      }
+    }
+  },
+  {
+    "id": "CROP_021",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Strawberry",
+    "kreol_name": "Fraise",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Bare-root Runner",
+        "priceMUR": 35,
+        "unit": "per bare-root runner",
+        "note": "Keep moist; requires careful early watering."
+      },
+      "direct_planting": {
+        "form": "Potted Rooted Runner",
+        "priceMUR": 80,
+        "unit": "per potted plant",
+        "note": "Established roots, often with early flowers."
+      }
+    }
+  },
+  {
+    "id": "CROP_022",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Mango",
+    "kreol_name": "Mangue",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seedling Tree (Manguier Sauvage)",
+        "priceMUR": 100,
+        "unit": "per seed-grown sapling",
+        "note": "Takes 5-7 years to fruit; unpredictable flavor."
+      },
+      "direct_planting": {
+        "form": "Grafted Variety Tree (Maison Rouge / Grafted)",
+        "priceMUR": 300,
+        "unit": "per grafted plant",
+        "note": "Fruits in 2-3 years; guarantees premium fruit quality."
+      }
+    }
+  },
+  {
+    "id": "CROP_023",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Lychee",
+    "kreol_name": "Leksi",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seedling Plant",
+        "priceMUR": 120,
+        "unit": "per young seedling",
+        "note": "Very slow growth; may take 10+ years to fruit."
+      },
+      "direct_planting": {
+        "form": "Air-Layered Tree (Marcotte)",
+        "priceMUR": 350,
+        "unit": "per marcotting plant",
+        "note": "Cloned from high-yield parent tree; fruits within 2-3 years."
+      }
+    }
+  },
+  {
+    "id": "CROP_024",
+    "category": "Seeds & Plants",
+    "subcategory": "Fruit",
+    "english_name": "Java Apple / Wax Apple",
+    "kreol_name": "Zambalac",
+    "purchase_options": {
+      "starting_from_scratch": {
+        "form": "Seed-grown Sapling",
+        "priceMUR": 80,
+        "unit": "per young sapling",
+        "note": "Requires patience; takes 4-5 years to fruit."
+      },
+      "direct_planting": {
+        "form": "Marcotted / Air-Layered Plant",
+        "priceMUR": 200,
+        "unit": "per established plant",
+        "note": "Produces sweet, juicy fruits much sooner."
+      }
+    }
+  },
+  {
+    "id": "CHEM_001",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Urea",
+    "kreol_name": "Di sel iré",
+    "description": "High-nitrogen granular fertilizer used for vegetative growth booster.",
+    "usage_purpose": "Nitrogen replenishment for leafy growth",
+    "priceMUR": 110,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_002",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Compound",
+    "english_name": "NPK Fertilizer",
+    "kreol_name": "Engrais konpozé",
+    "description": "Balanced macro-nutrient fertilizer used during land prep and growth.",
+    "usage_purpose": "General soil fertility & plant development",
+    "priceMUR": 135,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_003",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Muriate of Potash",
+    "kreol_name": "Di sel potasse",
+    "description": "Key source of potassium for root development, flowering, and fruiting.",
+    "usage_purpose": "Fruit quality, size, and stress tolerance",
+    "priceMUR": 160,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_004",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Calcium Nitrate",
+    "kreol_name": "Di sel rapport",
+    "description": "Soluble salt essential for preventing blossom end rot in tomatoes/peppers.",
+    "usage_purpose": "Hydroponics, fertigation & fruit structure",
+    "priceMUR": 180,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_005",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Epsom Salt",
+    "kreol_name": "Di sel epsom",
+    "description": "Corrects magnesium deficiency (yellowing leaves) and aids photosynthesis.",
+    "usage_purpose": "Magnesium & Sulfur nutrition boost",
+    "priceMUR": 140,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_006",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Bio-Pesticide / Organic",
+    "english_name": "Neem Oil",
+    "kreol_name": "Lwil neem",
+    "description": "Organic bio-pesticide safe for beneficial insects, repells pests.",
+    "usage_purpose": "Eco-friendly pest control (whiteflies, aphids)",
+    "priceMUR": 450,
+    "unit": "500ml bottle"
+  },
+  {
+    "id": "CHEM_007",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fungicide",
+    "english_name": "Mancozeb",
+    "kreol_name": "Dithane",
+    "description": "Broad-spectrum protective contact fungicide against leaf blights.",
+    "usage_purpose": "Fungal disease prevention (blight, mildews)",
+    "priceMUR": 290,
+    "unit": "500g pack"
+  },
+  {
+    "id": "CHEM_008",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide",
+    "english_name": "Lambda-Cyhalothrin",
+    "kreol_name": "Karate",
+    "description": "Fast-acting pyrethroid insecticide targeting caterpillars, beetles, bugs.",
+    "usage_purpose": "Chewing and sucking insect control",
+    "priceMUR": 380,
+    "unit": "250ml bottle"
+  },
+  {
+    "id": "CHEM_009",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide",
+    "english_name": "Chlorantraniliprole",
+    "kreol_name": "Coragen",
+    "description": "Highly effective targeted insecticide for lepidopteran pests (borers/worms).",
+    "usage_purpose": "Caterpillar & fruit borer control",
+    "priceMUR": 620,
+    "unit": "100ml bottle"
+  },
+  {
+    "id": "CHEM_010",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fungicide / Bactericide",
+    "english_name": "Copper Oxychloride",
+    "kreol_name": "Kiprex",
+    "description": "Contact bactericide and fungicide used widely on tomato, potato, citrus.",
+    "usage_purpose": "Bacterial spot, bacterial wilt, downy mildew",
+    "priceMUR": 310,
+    "unit": "500g pack"
+  },
+  {
+    "id": "CHEM_011",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Herbicide / Weedicide",
+    "english_name": "Glyphosate",
+    "kreol_name": "Medikaman l'herbe",
+    "description": "Non-selective systemic weedkiller used for total clearing of land.",
+    "usage_purpose": "Pre-planting weed eradication",
+    "priceMUR": 340,
+    "unit": "1L bottle"
+  },
+  {
+    "id": "CHEM_012",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Nutrient Supplement",
+    "english_name": "Seaweed Extract",
+    "kreol_name": "Engrais lamer",
+    "description": "Biostimulant enhancing root mass, seedling vigor, and drought resistance.",
+    "usage_purpose": "Plant biostimulant and stress relief",
+    "priceMUR": 280,
+    "unit": "500ml bottle"
+  },
+  {
+    "id": "CHEM_013",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Grow Substrate / Supplement",
+    "english_name": "Cocopeat Grow Bags",
+    "kreol_name": "Bag koko",
+    "description": "Soilless culture substrate widely adopted in hydroponic greenhouses.",
+    "usage_purpose": "Hydroponic vegetable cultivation",
+    "priceMUR": 210,
+    "unit": "slab"
+  },
+  {
+    "id": "CHEM_014",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide",
+    "english_name": "Cypermethrin",
+    "kreol_name": "Simbis",
+    "description": "Synthetic pyrethroid for rapid knockdown of field pests.",
+    "usage_purpose": "Control of flies, moths, caterpillars",
+    "priceMUR": 330,
+    "unit": "250ml bottle"
+  },
+  {
+    "id": "CHEM_015",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Nutrient Supplement",
+    "english_name": "Chelated Micronutrients",
+    "kreol_name": "Fer sele",
+    "description": "Foliar trace element spray preventing leaf chlorosis and deficiency.",
+    "usage_purpose": "Correction of micronutrient deficiencies",
+    "priceMUR": 250,
+    "unit": "250g pack"
+  },
+  {
+    "id": "CHEM_016",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Ammonium Sulphate",
+    "kreol_name": "Di sel koltar",
+    "description": "Fast-acting nitrogen & sulfur fertilizer ideal for alkaline soils.",
+    "usage_purpose": "Soil acidification and fast vegetative boost",
+    "priceMUR": 120,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_017",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Fertilizer / Inorganic Salt",
+    "english_name": "Triple Superphosphate",
+    "kreol_name": "Engrais racine",
+    "description": "High-concentration phosphorus fertilizer used for strong root system establishment.",
+    "usage_purpose": "Root development during planting",
+    "priceMUR": 150,
+    "unit": "kg"
+  },
+  {
+    "id": "CHEM_018",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide / Acaricide",
+    "english_name": "Abamectin",
+    "kreol_name": "Vertimec",
+    "description": "Systemic miticide and insecticide effective against leafminers and spider mites.",
+    "usage_purpose": "Control of mites and leafminers",
+    "priceMUR": 420,
+    "unit": "250ml bottle"
+  },
+  {
+    "id": "CHEM_019",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide",
+    "english_name": "Imidacloprid",
+    "kreol_name": "Confidor",
+    "description": "Systemic neonicotinoid insecticide targeting sap-sucking insects.",
+    "usage_purpose": "Aphid, whitefly, and thrips control",
+    "priceMUR": 390,
+    "unit": "250ml bottle"
+  },
+  {
+    "id": "CHEM_020",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Insecticide",
+    "english_name": "Methomyl",
+    "kreol_name": "Lannate",
+    "description": "Broad-spectrum carbamate insecticide with rapid contact action.",
+    "usage_purpose": "Knockdown of armyworms and stubborn pests",
+    "priceMUR": 310,
+    "unit": "250g pack"
+  },
+  {
+    "id": "CHEM_021",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Bio-Fungicide",
+    "english_name": "Trichoderma",
+    "kreol_name": "Bio-sarbi",
+    "description": "Beneficial bio-fungicide protecting roots against damping-off and soil fungi.",
+    "usage_purpose": "Biological root and soil fungal disease protection",
+    "priceMUR": 350,
+    "unit": "500g pack"
+  },
+  {
+    "id": "CHEM_022",
+    "category": "Agro-Chemicals & Salts",
+    "subcategory": "Soil Amendment",
+    "english_name": "Agricultural Lime",
+    "kreol_name": "Chaux",
+    "description": "Natural soil conditioner used to neutralize soil acidity and improve nutrient uptake.",
+    "usage_purpose": "pH balance & soil conditioning",
+    "priceMUR": 180,
+    "unit": "25kg bag"
+  }
+]

@@ -73,7 +73,7 @@
       "model_transcript": "mo bann plan tomat ena bann tas nwar lor pey",
       "word_error_rate": 0.5,
       "result": "partial",
-      "notes": "Meaning mostly retained, with French code-switching normalized to Morisien."
+      "notes": "Meaning mostly retained, with non-Morisien wording normalized to Morisien."
     },
     {
       "audio_file": "mfe-010.wav",

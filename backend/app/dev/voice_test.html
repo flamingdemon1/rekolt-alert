@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rekolt Alert voice test</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 32px 20px;
+        font: 16px/1.5 system-ui, sans-serif;
+        color: #17251d;
+        background: #f4f7f4;
+      }
+      button, textarea {
+        font: inherit;
+      }
+      button {
+        margin: 4px 4px 4px 0;
+        padding: 10px 14px;
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: not-allowed;
+      }
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 90px;
+        padding: 10px;
+      }
+      section {
+        margin-top: 20px;
+        padding: 18px;
+        border: 1px solid #cad7cd;
+        border-radius: 10px;
+        background: white;
+      }
+      [data-status] {
+        min-height: 24px;
+        font-weight: 600;
+      }
+      [data-messages] article {
+        margin: 12px 0;
+        padding: 10px 12px;
+        border-left: 4px solid #438a5e;
+        background: #f4f7f4;
+      }
+      [data-messages] strong {
+        display: block;
+      }
+      .warning {
+        color: #7a3f00;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Rekolt Alert voice conversation test</h1>
+    <p>
+      Development-only push-to-talk test. Audio stays in memory and the draft
+      transcript must be confirmed before it is sent to Gemma.
+    </p>
+
+    <section>
+      <h2>1. Speak in Morisien</h2>
+      <button type="button" data-start>Start recording</button>
+      <button type="button" data-stop disabled>Stop recording</button>
+      <p data-status>Ready.</p>
+    </section>
+
+    <section>
+      <h2>2. Confirm the transcript</h2>
+      <label for="transcript">
+        Edit any transcription mistake before continuing.
+      </label>
+      <textarea id="transcript" data-transcript></textarea>
+      <p class="warning" data-corrections></p>
+      <button type="button" data-send disabled>
+        Confirm and send
+      </button>
+    </section>
+
+    <section>
+      <h2>3. Conversation</h2>
+      <label>
+        <input type="checkbox" data-auto-speak checked>
+        Speak each Morisien reply automatically
+      </label>
+      <div data-messages aria-live="polite"></div>
+      <audio data-player controls></audio>
+    </section>
+
+    <script type="module">
+      const startButton = document.querySelector("[data-start]");
+      const stopButton = document.querySelector("[data-stop]");
+      const sendButton = document.querySelector("[data-send]");
+      const statusText = document.querySelector("[data-status]");
+      const transcript = document.querySelector("[data-transcript]");
+      const corrections = document.querySelector("[data-corrections]");
+      const messages = document.querySelector("[data-messages]");
+      const autoSpeak = document.querySelector("[data-auto-speak]");
+      const player = document.querySelector("[data-player]");
+
+      let audioContext;
+      let stream;
+      let source;
+      let processor;
+      let chunks = [];
+      let sampleRate = 48000;
+      let caseId = null;
+      let playerUrl = "";
+
+      function setStatus(message, isError = false) {
+        statusText.textContent = message;
+        statusText.style.color = isError ? "#a32121" : "";
+      }
+
+      function stopMicrophone() {
+        processor?.disconnect();
+        source?.disconnect();
+        stream?.getTracks().forEach((track) => track.stop());
+        audioContext?.close();
+        processor = null;
+        source = null;
+        stream = null;
+        audioContext = null;
+      }
+
+      function mergeChunks(recordedChunks) {
+        const length = recordedChunks.reduce(
+          (total, chunk) => total + chunk.length,
+          0,
+        );
+        const merged = new Float32Array(length);
+        let offset = 0;
+        recordedChunks.forEach((chunk) => {
+          merged.set(chunk, offset);
+          offset += chunk.length;
+        });
+        return merged;
+      }
+
+      function writeText(view, offset, text) {
+        for (let index = 0; index < text.length; index += 1) {
+          view.setUint8(offset + index, text.charCodeAt(index));
+        }
+      }
+
+      function encodePcmWav(samples, rate) {
+        const buffer = new ArrayBuffer(44 + samples.length * 2);
+        const view = new DataView(buffer);
+        writeText(view, 0, "RIFF");
+        view.setUint32(4, 36 + samples.length * 2, true);
+        writeText(view, 8, "WAVE");
+        writeText(view, 12, "fmt ");
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, 1, true);
+        view.setUint32(24, rate, true);
+        view.setUint32(28, rate * 2, true);
+        view.setUint16(32, 2, true);
+        view.setUint16(34, 16, true);
+        writeText(view, 36, "data");
+        view.setUint32(40, samples.length * 2, true);
+
+        let offset = 44;
+        samples.forEach((sample) => {
+          const bounded = Math.max(-1, Math.min(1, sample));
+          const pcm = bounded < 0
+            ? bounded * 0x8000
+            : bounded * 0x7fff;
+          view.setInt16(offset, pcm, true);
+          offset += 2;
+        });
+        return new Blob([buffer], { type: "audio/wav" });
+      }
+
+      async function startRecording() {
+        try {
+          chunks = [];
+          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          audioContext = new AudioContext();
+          sampleRate = audioContext.sampleRate;
+          source = audioContext.createMediaStreamSource(stream);
+          processor = audioContext.createScriptProcessor(4096, 1, 1);
+          processor.onaudioprocess = (event) => {
+            chunks.push(
+              new Float32Array(event.inputBuffer.getChannelData(0)),
+            );
+          };
+          source.connect(processor);
+          processor.connect(audioContext.destination);
+          startButton.disabled = true;
+          stopButton.disabled = false;
+          sendButton.disabled = true;
+          setStatus("Recording… speak one short Morisien sentence.");
+        } catch (error) {
+          setStatus(error.message || "Microphone access failed.", true);
+          stopMicrophone();
+        }
+      }
+
+      async function stopRecording() {
+        stopButton.disabled = true;
+        setStatus("Transcribing… the first MMS request may take several minutes.");
+        const wav = encodePcmWav(mergeChunks(chunks), sampleRate);
+        stopMicrophone();
+
+        try {
+          const response = await fetch("/api/v1/language/transcribe", {
+            method: "POST",
+            headers: { "Content-Type": "audio/wav" },
+            body: wav,
+          });
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.detail || "Transcription failed.");
+          }
+          transcript.value = result.corrected_transcript;
+          corrections.textContent = result.automatic_corrections.length
+            ? `Automatic spacing: ${result.automatic_corrections
+              .map((item) => `${item.original} → ${item.replacement}`)
+              .join(", ")}`
+            : "No automatic word-boundary corrections.";
+          sendButton.disabled = false;
+          setStatus("Draft ready. Read and correct it before sending.");
+        } catch (error) {
+          setStatus(error.message || "Transcription failed.", true);
+        } finally {
+          startButton.disabled = false;
+        }
+      }
+
+      function addMessage(speaker, text) {
+        const article = document.createElement("article");
+        const label = document.createElement("strong");
+        const content = document.createElement("span");
+        label.textContent = speaker;
+        content.textContent = text;
+        article.append(label, content);
+        messages.append(article);
+        article.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+
+      async function speakReply(text) {
+        const response = await fetch("/api/v1/language/speech", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.detail || "Speech generation failed.");
+        }
+        if (playerUrl) URL.revokeObjectURL(playerUrl);
+        playerUrl = URL.createObjectURL(await response.blob());
+        player.src = playerUrl;
+        await player.play();
+      }
+
+      async function sendConfirmedTurn() {
+        const confirmedText = transcript.value.trim();
+        if (!confirmedText) {
+          setStatus("Confirm a non-empty transcript first.", true);
+          return;
+        }
+        sendButton.disabled = true;
+        startButton.disabled = true;
+        setStatus("Thinking and translating…");
+        addMessage("You", confirmedText);
+
+        try {
+          const response = await fetch(
+            "/api/v1/language/conversation/turn",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                case_id: caseId,
+                confirmed_transcript: confirmedText,
+                language: "mfe",
+              }),
+            },
+          );
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.detail || "Conversation request failed.");
+          }
+          caseId = result.case_id;
+          addMessage("Rekolt Alert", result.reply_text);
+          transcript.value = "";
+          corrections.textContent = "";
+          setStatus("Reply ready. Record your next turn when ready.");
+          if (autoSpeak.checked) {
+            await speakReply(result.reply_text);
+          }
+        } catch (error) {
+          setStatus(error.message || "Conversation request failed.", true);
+        } finally {
+          startButton.disabled = false;
+          sendButton.disabled = !transcript.value.trim();
+        }
+      }
+
+      startButton.addEventListener("click", startRecording);
+      stopButton.addEventListener("click", stopRecording);
+      sendButton.addEventListener("click", sendConfirmedTurn);
+      transcript.addEventListener("input", () => {
+        sendButton.disabled = !transcript.value.trim();
+      });
+      window.addEventListener("beforeunload", () => {
+        stopMicrophone();
+        if (playerUrl) URL.revokeObjectURL(playerUrl);
+      });
+    </script>
+  </body>
+</html>

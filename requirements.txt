@@ -1,1 +1,13 @@
-# Runtime dependencies will be added by the backend team once the official Gemma integration method is confirmed.
+# FastAPI runtime
+fastapi==0.141.1
+pydantic-settings==2.14.2
+requests==2.34.2
+uvicorn[standard]==0.52.0
+
+# Hosted Gemma
+google-genai==2.15.0
+
+# Lazy-loaded Morisien ASR and TTS runtimes
+numpy==2.5.1
+torch==2.13.0
+transformers==5.14.1

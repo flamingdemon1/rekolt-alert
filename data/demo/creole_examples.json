@@ -4,7 +4,7 @@
     "expected_transcript": "Apre gro lapli yer, delo inn res dan mo karo ek boukou plant inn tonbe.",
     "model_transcript": "apre gro lapliyer delo in reste mon karo ek beaucoup plante in tombé",
     "result": "partial",
-    "notes": "Meaning mostly retained, but several words were normalized into French-like spelling."
+    "notes": "Meaning mostly retained, but several words used non-Morisien spelling."
   },
   {
     "audio_file": "mfe-002.wav",
@@ -46,14 +46,14 @@
     "expected_transcript": "Mo pe plant tomat dan Flacq ek ena tas nwar lor bann fey.",
     "model_transcript": "Pou b'plant domat dan flac ek ena tas noir lou ban fey",
     "result": "partial",
-    "notes": "Crop, location, and symptom were recognizable, with French normalization and sound errors."
+    "notes": "Crop, location, and symptom were recognizable, with non-Morisien normalization and sound errors."
   },
   {
     "audio_file": "mfe-008.wav",
     "expected_transcript": "Mo bizin led vit parski problem-la pe fane dan karo.",
     "model_transcript": "Ou bizalite vite parce qu'il problème la pépine de carao. Je fais fan.",
     "result": "fail",
-    "notes": "The output changed into French-like text and did not reliably preserve the statement."
+    "notes": "The output changed into non-Morisien text and did not reliably preserve the statement."
   },
   {
     "audio_file": "mfe-009.wav",
@@ -67,7 +67,7 @@
     "expected_transcript": "Bann fey kann pe vinn zonn ek plant-la pa pe grandi bien.",
     "model_transcript": "Ban fey kan pe vin zone ek plant la papy grand di bien",
     "result": "partial",
-    "notes": "The main meaning was retained with merging and French-like spelling."
+    "notes": "The main meaning was retained with merging and non-Morisien spelling."
   },
   {
     "audio_file": "mfe-011.wav",

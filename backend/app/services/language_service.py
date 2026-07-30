@@ -7,6 +7,7 @@ model and do not infer missing agricultural information.
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from functools import cache
 from typing import Final
@@ -15,6 +16,24 @@ from backend.app.prompts.creole_prompts import MORISIEN_GLOSSARY
 
 _TOKEN_PATTERN: Final = re.compile(r"^([^\w]*)([\w'’-]+)([^\w]*)$", re.UNICODE)
 _MAX_SEGMENTS: Final = 3
+_REVIEWED_ASR_TOKEN_CORRECTIONS: Final = {
+    "anbat": "anba",
+    "branz": "brans",
+    "karoa": "karo",
+    "kokom": "konkonm",
+    "rasien": "rasinn",
+}
+
+
+def normalize_morisien_generated_text(text: str) -> str:
+    """Remove non-standard diacritics from generated Morisien copy."""
+
+    decomposed = unicodedata.normalize("NFKD", text)
+    return "".join(
+        character
+        for character in decomposed
+        if unicodedata.category(character) != "Mn"
+    )
 
 
 @dataclass(frozen=True)
@@ -23,6 +42,38 @@ class WordBoundaryCorrection:
 
     original: str
     replacement: str
+
+
+def correct_reviewed_morisien_asr_tokens(
+    transcript: str,
+) -> tuple[str, tuple[WordBoundaryCorrection, ...]]:
+    """Correct only exact MMS errors reviewed in the team's recordings."""
+
+    corrected_tokens: list[str] = []
+    corrections: list[WordBoundaryCorrection] = []
+    for token in transcript.split():
+        match = _TOKEN_PATTERN.fullmatch(token)
+        if match is None:
+            corrected_tokens.append(token)
+            continue
+
+        leading, word, trailing = match.groups()
+        replacement = _REVIEWED_ASR_TOKEN_CORRECTIONS.get(word.casefold())
+        if replacement is None:
+            corrected_tokens.append(token)
+            continue
+        if word[:1].isupper():
+            replacement = replacement.capitalize()
+
+        corrected_tokens.append(f"{leading}{replacement}{trailing}")
+        corrections.append(
+            WordBoundaryCorrection(
+                original=word,
+                replacement=replacement,
+            )
+        )
+
+    return " ".join(corrected_tokens), tuple(corrections)
 
 
 def _single_word_vocabulary() -> frozenset[str]:
