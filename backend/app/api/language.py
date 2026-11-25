@@ -86,11 +86,14 @@ def _fast_conversation_client() -> GoogleGemmaClient:
     return GoogleGemmaClient(
         api_key=settings.gemma_api_key(),
         model_name=settings.GEMMA_MODEL_NAME,
-        fallback_model_names=(settings.GEMMA_FALLBACK_MODEL_NAME,),
+        fallback_model_names=(
+            settings.CONVERSATION_FALLBACK_MODEL,
+            settings.GEMMA_FALLBACK_MODEL_NAME,
+        ),
         maximum_attempts=2,
         maximum_output_tokens=512,
         thinking_level="minimal",
-        request_timeout_ms=12_000,
+        request_timeout_ms=8_000,
     )
 
 

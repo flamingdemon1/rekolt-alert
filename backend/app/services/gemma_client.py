@@ -85,6 +85,7 @@ class GoogleGemmaClient:
             api_key=self.api_key,
             http_options=types.HttpOptions(
                 timeout=self.request_timeout_ms,
+                retry_options=types.HttpRetryOptions(attempts=1),
             ),
         )
         self._types = types
@@ -190,9 +191,12 @@ class GoogleGemmaClient:
                         status_code in _RETRYABLE_STATUS_CODES
                         or is_timeout
                     )
+                    if status_code == 404 and has_fallback:
+                        break
                     if not is_retryable:
                         raise RuntimeError(
-                            "The hosted Gemma request could not be completed"
+                            "The hosted model request could not be completed "
+                            f"(provider status {status_code or 'unknown'})."
                         ) from error
                     last_provider_error = error
                     if has_fallback:
@@ -202,7 +206,8 @@ class GoogleGemmaClient:
                         or attempt == self.maximum_attempts - 1
                     ):
                         raise RuntimeError(
-                            "The hosted Gemma request could not be completed"
+                            "The AI service is temporarily unavailable "
+                            f"(provider status {status_code or 'timeout'}). Please retry."
                         ) from error
                     retry_delay = (
                         self.initial_retry_delay_seconds * (2**attempt)
