@@ -988,6 +988,11 @@ def test_gemma_client_uses_fallback_without_waiting() -> None:
     assert delays == []
 
 
+def test_hosted_client_rejects_deadline_below_provider_minimum() -> None:
+    with pytest.raises(ValueError, match="at least 10 seconds"):
+        GoogleGemmaClient(api_key="test-key", model_name="test", request_timeout_ms=8_000)
+
+
 def test_conversation_uses_another_family_after_high_demand(monkeypatch) -> None:
     from backend.app.api import language
 

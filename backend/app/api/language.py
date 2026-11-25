@@ -93,7 +93,7 @@ def _fast_conversation_client() -> GoogleGemmaClient:
         maximum_attempts=2,
         maximum_output_tokens=512,
         thinking_level="minimal",
-        request_timeout_ms=8_000,
+        request_timeout_ms=12_000,
     )
 
 

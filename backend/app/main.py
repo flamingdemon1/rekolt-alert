@@ -1,8 +1,8 @@
 """FastAPI entry point for the Rekolt Alert backend."""
 
 import asyncio
-from html import escape
 from contextlib import asynccontextmanager
+from html import escape
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException

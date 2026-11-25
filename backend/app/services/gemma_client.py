@@ -43,8 +43,8 @@ class GoogleGemmaClient:
             raise ValueError("maximum_attempts must be at least 1")
         if maximum_output_tokens < 1:
             raise ValueError("maximum_output_tokens must be at least 1")
-        if request_timeout_ms < 1:
-            raise ValueError("request_timeout_ms must be at least 1")
+        if request_timeout_ms < 10_000:
+            raise ValueError("Hosted requests require a deadline of at least 10 seconds")
         if thinking_level not in {None, "minimal", "high"}:
             raise ValueError(
                 "thinking_level must be minimal, high, or None"
