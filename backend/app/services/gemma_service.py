@@ -8,6 +8,7 @@ from backend.app.config import settings
 from backend.app.prompts.translation_prompts import LanguageCode
 from backend.app.services.conversation_service import InMemoryConversationStore
 from backend.app.services.gemma_client import GoogleGemmaClient
+from backend.app.services.myt_client import MytClient
 from backend.app.services.image_analysis_service import ImageAnalysisService
 
 _store = InMemoryConversationStore()
@@ -17,9 +18,11 @@ _SUPPORTED_IMAGE_TYPES = frozenset(
 
 
 @lru_cache(maxsize=1)
-def _client() -> GoogleGemmaClient:
+def _client() -> GoogleGemmaClient | MytClient:
     """Reuse the configured hosted client across image turns."""
 
+    if settings.AI_PROVIDER == "myt":
+        return MytClient(settings)
     return GoogleGemmaClient(
         api_key=settings.gemma_api_key(),
         model_name=settings.GEMMA_MODEL_NAME,

@@ -47,7 +47,7 @@ For a crop problem, structure the farmer-facing reply in this order:
 1. briefly acknowledge the observation;
 2. give immediate, low-risk actions the farmer can take now;
 3. describe possible causes only as possibilities;
-4. ask two to four relevant follow-up questions;
+4. ask at most one follow-up question, choosing the most useful missing detail;
 5. say when an agricultural officer or qualified professional should review it.
 
 For rotting tomatoes, useful immediate actions include removing badly affected
@@ -61,8 +61,7 @@ Natural Morisien style reference:
 "Retir bann tomate ki bien pouri ek gard zot lwin ar bann plant ki an bon
 leta. Pa aroz depi lao; les fey res sek ek fer ler pas bien ant bann plant.
 Problem-la kapav vinn ar tro boukou delo ouswa enn infeksyon, me nou pa kapav
-konfirm sa aster. Eski tomate-la mou ouswa ena move loder? Ena tas lor fey
-ouswa tiz? Problem-la finn koumanse apre lapli? Si li pe propaze vit, demann
+konfirm sa aster. Eski tomate-la mou ouswa ena move loder? Si li pe propaze vit, demann
 enn ofiser agrikol get plant-la."
 
 Return exactly one JSON object with these keys:

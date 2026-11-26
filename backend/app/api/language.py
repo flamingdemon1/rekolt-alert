@@ -6,6 +6,8 @@ import base64
 import binascii
 from functools import lru_cache
 
+from starlette.concurrency import run_in_threadpool
+
 from fastapi import APIRouter, HTTPException, Request, Response, status
 
 from backend.app.config import settings
@@ -30,6 +32,7 @@ from backend.app.services.conversation_service import (
 )
 from backend.app.services.gemma_client import GoogleGemmaClient
 from backend.app.services.image_analysis_service import ImageAnalysisService
+from backend.app.services.myt_client import MytClient
 from backend.app.services.speech_service import MorisienASRService
 from backend.app.services.translation_service import TranslationService
 from backend.app.services.tts_service import MorisienTTSService
@@ -44,6 +47,8 @@ _conversation_store = InMemoryConversationStore()
 def warm_language_models() -> None:
     """Prepare local speech models before the first farmer interaction."""
 
+    if settings.AI_PROVIDER == "myt":
+        return
     _asr_service.warm_up()
     _tts_service.warm_up()
 
@@ -65,9 +70,11 @@ def _matches_image_signature(data: bytes, mime_type: str) -> bool:
 
 
 @lru_cache(maxsize=1)
-def _gemma_client() -> GoogleGemmaClient:
+def _gemma_client() -> GoogleGemmaClient | MytClient:
     """Reuse one lazy SDK client instead of reconnecting on every turn."""
 
+    if settings.AI_PROVIDER == "myt":
+        return MytClient(settings)
     return GoogleGemmaClient(
         api_key=settings.gemma_api_key(),
         model_name=settings.GEMMA_MODEL_NAME,
@@ -80,9 +87,11 @@ def _gemma_client() -> GoogleGemmaClient:
 
 
 @lru_cache(maxsize=1)
-def _fast_conversation_client() -> GoogleGemmaClient:
+def _fast_conversation_client() -> GoogleGemmaClient | MytClient:
     """Use direct answering for low-latency voice conversation turns."""
 
+    if settings.AI_PROVIDER == "myt":
+        return MytClient(settings)
     return GoogleGemmaClient(
         api_key=settings.gemma_api_key(),
         model_name=settings.GEMMA_MODEL_NAME,
@@ -137,7 +146,9 @@ async def transcribe_speech(
         )
 
     try:
-        return _asr_service.transcribe_wav(
+        asr = MytClient(settings) if settings.AI_PROVIDER == "myt" else _asr_service
+        return await run_in_threadpool(
+            asr.transcribe_wav,
             wav_bytes,
             language=language,
         )
@@ -203,7 +214,8 @@ def synthesize_morisien(payload: SpeechRequest) -> Response:
     """Return WAV audio without retaining the supplied text or waveform."""
 
     try:
-        wav_bytes = _tts_service.synthesize_wav(payload.text)
+        tts = MytClient(settings) if settings.AI_PROVIDER == "myt" else _tts_service
+        wav_bytes = tts.synthesize_wav(payload.text)
     except ValueError as error:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

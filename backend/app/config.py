@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from functools import cached_property
+from typing import Literal
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,6 +15,11 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Rekolt Alert"
     API_V1_STR: str = "/api/v1"
     APP_ENV: str = "development"
+    AI_PROVIDER: Literal["myt", "legacy"] = "legacy"
+    MYT_API_KEY: SecretStr | None = None
+    MYT_BASE_URL: str = ""
+    MYT_CHAT_MODEL: str = "myt/deepseek-v4-flash"
+    MYT_TTS_VOICE: str = "alloy"
     GEMMA_API_KEY: SecretStr | None = None
     GEMMA_MODEL_NAME: str = "gemma-4-26b-a4b-it"
     GEMMA_FALLBACK_MODEL_NAME: str = "gemma-4-31b-it"

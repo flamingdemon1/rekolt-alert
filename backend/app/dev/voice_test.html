@@ -60,7 +60,7 @@
     <h1>Rekolt Alert voice conversation test</h1>
     <p>
       Development-only push-to-talk test. Audio stays in memory and the draft
-      transcript must be confirmed before it is sent to Gemma.
+      transcript must be confirmed before it is sent to the chat model.
     </p>
 
     <section>
@@ -204,7 +204,7 @@
 
       async function stopRecording() {
         stopButton.disabled = true;
-        setStatus("Transcribing… the first MMS request may take several minutes.");
+        setStatus("Transcribing your recording…");
         const wav = encodePcmWav(mergeChunks(chunks), sampleRate);
         stopMicrophone();
 
