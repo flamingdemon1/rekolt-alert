@@ -1,0 +1,396 @@
+[
+  {
+    "aliases": [
+      "garlic",
+      "ail",
+      "lay"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/ail.html"
+  },
+  {
+    "aliases": [
+      "amaranth",
+      "amarante",
+      "brède malbar",
+      "brède kotachee"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/brede.html"
+  },
+  {
+    "aliases": [
+      "peanut",
+      "groundnut",
+      "arachide",
+      "pistach"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/arachide.html",
+    "cycle": "110 à 120 jours"
+  },
+  {
+    "aliases": [
+      "taro",
+      "arouille",
+      "arouy"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/arouille.html"
+  },
+  {
+    "aliases": [
+      "artichoke",
+      "artichaut"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/artichaut.html",
+    "cycle": "3 à 5 ans"
+  },
+  {
+    "aliases": [
+      "asparagus",
+      "asperge"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/asperge.html",
+    "cycle": "7 à 10 ans"
+  },
+  {
+    "aliases": [
+      "eggplant",
+      "aubergine",
+      "bringelle",
+      "brinzel",
+      "brinjel"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/aubergine.html",
+    "cycle": "9 à 12 mois"
+  },
+  {
+    "aliases": [
+      "basil",
+      "basilic",
+      "bazilik"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/basilic.html",
+    "cycle": "5 à 6 mois"
+  },
+  {
+    "aliases": [
+      "beetroot",
+      "betterave"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/betterave.html",
+    "cycle": "3 mois"
+  },
+  {
+    "aliases": [
+      "broccoli",
+      "brocoli"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/brocoli.html"
+  },
+  {
+    "aliases": [
+      "carrot",
+      "carotte",
+      "karot"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/carotte.html"
+  },
+  {
+    "aliases": [
+      "cabbage",
+      "chou"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/chou.html"
+  },
+  {
+    "aliases": [
+      "cauliflower",
+      "chou-fleur"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/choufleur.html"
+  },
+  {
+    "aliases": [
+      "brussels sprouts",
+      "chou de bruxelle"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/choudebruxelle.html",
+    "cycle": "3 à 4 mois"
+  },
+  {
+    "aliases": [
+      "spring onion",
+      "ciboule",
+      "queue d'oignon"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/ciboule.html"
+  },
+  {
+    "aliases": [
+      "coriander",
+      "coriandre",
+      "kotomili"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/coriandre.html",
+    "cycle": "35 à 45 jours"
+  },
+  {
+    "aliases": [
+      "zucchini",
+      "courgette"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/courgette.html",
+    "cycle": "3 mois"
+  },
+  {
+    "aliases": [
+      "butternut squash",
+      "courge butternut"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/courgebutternut.html",
+    "cycle": "4 à 5 mois"
+  },
+  {
+    "aliases": [
+      "watercress",
+      "cresson"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/cresson.html"
+  },
+  {
+    "aliases": [
+      "turmeric",
+      "curcuma",
+      "safran"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/curcuma.html",
+    "cycle": "7 à 9 mois"
+  },
+  {
+    "aliases": [
+      "ginger",
+      "gingembre",
+      "zinzamb"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/gingembre.html",
+    "cycle": "8 à 9 mois"
+  },
+  {
+    "aliases": [
+      "bean",
+      "haricot",
+      "zariko"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/haricot.html"
+  },
+  {
+    "aliases": [
+      "lima bean",
+      "gros pois",
+      "gros pwa"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/grospois.html"
+  },
+  {
+    "aliases": [
+      "lettuce",
+      "laitue"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/laitue.html"
+  },
+  {
+    "aliases": [
+      "okra",
+      "lalo"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/lalo.html",
+    "cycle": "4 à 6 mois"
+  },
+  {
+    "aliases": [
+      "ridge gourd",
+      "pipengaille",
+      "pipangay",
+      "chouchou",
+      "chayote",
+      "patole",
+      "calebasse",
+      "concombre",
+      "cucumber",
+      "konkonm"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/filants.html"
+  },
+  {
+    "aliases": [
+      "maize",
+      "maïs",
+      "sweet corn"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/mais.html",
+    "cycle": "2.5 à 3 mois"
+  },
+  {
+    "aliases": [
+      "cassava",
+      "manioc",
+      "maniok"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/manioc.html",
+    "cycle": "8 à 9 mois"
+  },
+  {
+    "aliases": [
+      "melon"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/melon.html",
+    "cycle": "3 mois"
+  },
+  {
+    "aliases": [
+      "watermelon",
+      "melon d'eau"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/melondeau.html",
+    "cycle": "3.5 à 4 mois"
+  },
+  {
+    "aliases": [
+      "moringa",
+      "brède mouroum",
+      "bred mouroum"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/moringa.html"
+  },
+  {
+    "aliases": [
+      "onion",
+      "oignon",
+      "zwayon"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/oignon.html"
+  },
+  {
+    "aliases": [
+      "jicama",
+      "sankot",
+      "patate chinois"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/patatechinois.html",
+    "cycle": "4 à 5 mois"
+  },
+  {
+    "aliases": [
+      "sweet potato",
+      "patate douce",
+      "patat dous"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/patatedouce.html"
+  },
+  {
+    "aliases": [
+      "pattypan squash",
+      "pâtisson"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/patisson.html",
+    "cycle": "3 mois"
+  },
+  {
+    "aliases": [
+      "pea",
+      "petit pois"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/petitpois.html",
+    "cycle": "3 à 4 mois"
+  },
+  {
+    "aliases": [
+      "petsai",
+      "petsay"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/petsai.html"
+  },
+  {
+    "aliases": [
+      "chilli",
+      "piment",
+      "chili",
+      "hot pepper"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/piment.html"
+  },
+  {
+    "aliases": [
+      "leek",
+      "poireau"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/poireau.html"
+  },
+  {
+    "aliases": [
+      "bell pepper",
+      "sweet pepper",
+      "poivron"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/poivron.html",
+    "cycle": "4 à 6 mois"
+  },
+  {
+    "aliases": [
+      "potato",
+      "pomme de terre",
+      "pomdeter"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/pommedeterre.html",
+    "cycle": "90 à 105 jours"
+  },
+  {
+    "aliases": [
+      "radish",
+      "radis"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/radis.html",
+    "cycle": "20 à 35 jours"
+  },
+  {
+    "aliases": [
+      "white radish",
+      "radis blanc",
+      "rave"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/rave.html",
+    "cycle": "5 à 6 semaines"
+  },
+  {
+    "aliases": [
+      "edamame",
+      "soja-légume"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/sojalegume.html"
+  },
+  {
+    "aliases": [
+      "thyme",
+      "thym"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/thym.html"
+  },
+  {
+    "aliases": [
+      "tomato",
+      "tomatoes",
+      "tomat",
+      "tomate",
+      "tomates",
+      "pomme d'amour"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/tomate.html"
+  },
+  {
+    "aliases": [
+      "cowpea",
+      "voëhm",
+      "voehm"
+    ],
+    "guide": "https://farei.mu/apmis/guide/crops/voehm.html",
+    "cycle": "3 à 4 mois"
+  }
+]

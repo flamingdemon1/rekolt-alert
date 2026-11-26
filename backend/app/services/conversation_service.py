@@ -14,6 +14,7 @@ from backend.app.prompts.conversation_prompts import (
     ConversationLanguageCode,
     build_conversation_prompt,
 )
+from backend.app.services.crop_reference import latest_crop_reference
 from backend.app.services.gemma_client import TextGenerationClient
 from backend.app.services.language_service import (
     normalize_morisien_generated_text,
@@ -330,24 +331,6 @@ class VoiceConversationService:
         return {}
 
     @staticmethod
-    def _crop_from_context(text: str) -> str | None:
-        lowered = text.casefold()
-        crop_names = (
-            "tomato",
-            "tomate",
-            "tomat",
-            "piment",
-            "chilli",
-            "pepper",
-            "cucumber",
-            "concombre",
-            "konkonm",
-            "potato",
-            "pomme de terre",
-        )
-        return next((crop for crop in crop_names if crop in lowered), None)
-
-    @staticmethod
     def _stock_label(
         product: ShopProductContext,
         language: ConversationLanguageCode,
@@ -513,6 +496,22 @@ class VoiceConversationService:
             raise ValueError("confirmed transcript cannot be empty")
 
         resolved_case_id = self.store.get_or_create(case_id)
+        if re.search(
+            r"\bmo\s+(?:fess?|fesses|latet|led[o]?|dodo|vant|lipie|lame|zorey)"
+            r"\s+(?:(?:pe|p)\s+)?fer\s*ma+l\b",
+            cleaned, re.IGNORECASE,
+        ):
+            redirect = {
+                "mfe": "Mo kapav ed ou ar bann kestion lor plant. Ki ou ti pou kontan kone lor ou plant?",
+                "en": "I can help with questions about plants. What would you like to know about yours?",
+                "fr": "Je peux vous aider avec vos plantes. Que souhaitez-vous savoir ?",
+            }
+            return ConversationResult(
+                case_id=resolved_case_id, source_language=language,
+                confirmed_transcript=cleaned, meaning_for_analysis_en="The speaker reports personal pain.",
+                reply_text=redirect[language], reply_language=language, translation_uncertain_segments=(),
+            )
+
         if _GREETING_ONLY_PATTERN.fullmatch(cleaned):
             reply_text = {
                 "mfe": "Bonzour! Ki plant ou pe pouse?",
@@ -546,7 +545,7 @@ class VoiceConversationService:
         )
         if asks_for_general_help:
             farmer_message_en = (
-                "I have a problem with my tomato plants. What can I do?"
+                "I have a problem with my plants. What can I do?"
                 if language == "mfe"
                 else cleaned
             )
@@ -602,6 +601,7 @@ class VoiceConversationService:
             history=farmer_history_text,
             case_context=case_context,
         )
+        reference = latest_crop_reference(cleaned, farmer_history_text)
         context = {
             "conversation_history": [
                 {
@@ -611,9 +611,8 @@ class VoiceConversationService:
                 for farmer, assistant in history_pairs
             ],
             "current_case": case_context,
-            "crop": self._crop_from_context(
-                " ".join([*farmer_history_text, cleaned])
-            ),
+            "crop": reference["name"] if reference else None,
+            "local_crop_reference": reference,
             "observations": case_context.get("visual_observations", []),
             "possible_risks": case_context.get("possible_risks", []),
             "weather_context": case_context.get("weather_context", {}),

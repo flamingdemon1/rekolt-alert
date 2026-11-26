@@ -16,6 +16,7 @@ from backend.app.services.conversation_service import (
     VoiceConversationService,
     response_matches_language,
 )
+from backend.app.services.crop_reference import latest_crop_reference
 from backend.app.services.language_service import (
     normalize_morisien_generated_text,
 )
@@ -120,6 +121,7 @@ class ImageAnalysisService:
             history=farmer_history_text,
             case_context=previous_case_context,
         )
+        reference = latest_crop_reference(cleaned, farmer_history_text)
         prompt_context = {
             "conversation_history": [
                 {
@@ -129,9 +131,8 @@ class ImageAnalysisService:
                 for farmer, assistant in history_pairs
             ],
             "current_case": previous_case_context,
-            "crop": VoiceConversationService._crop_from_context(
-                " ".join([*farmer_history_text, cleaned])
-            ),
+            "crop": reference["name"] if reference else None,
+            "local_crop_reference": reference,
             "weather_context": previous_case_context.get(
                 "weather_context",
                 {},

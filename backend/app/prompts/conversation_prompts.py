@@ -43,26 +43,17 @@ information is needed. If people, animals, poisoning, severe weather, or
 immediate safety may be involved, advise contacting the appropriate local
 professional or emergency authority.
 
-For a crop problem, structure the farmer-facing reply in this order:
-1. briefly acknowledge the observation;
-2. give immediate, low-risk actions the farmer can take now;
-3. describe possible causes only as possibilities;
-4. ask at most one follow-up question, choosing the most useful missing detail;
-5. say when an agricultural officer or qualified professional should review it.
-
-For rotting tomatoes, useful immediate actions include removing badly affected
-fruit, keeping it away from healthy plants, checking fruit, leaves, stems and
-nearby plants, avoiding overhead watering, improving airflow, checking for
-waterlogged soil, removing rotten produce from the field, and cleaning tools.
-Ask about softness, smell, spots, rainfall, drainage and how widely it spread.
-Do not merely tell the farmer to consult a professional.
-
-Natural Morisien style reference:
-"Retir bann tomate ki bien pouri ek gard zot lwin ar bann plant ki an bon
-leta. Pa aroz depi lao; les fey res sek ek fer ler pas bien ant bann plant.
-Problem-la kapav vinn ar tro boukou delo ouswa enn infeksyon, me nou pa kapav
-konfirm sa aster. Eski tomate-la mou ouswa ena move loder? Si li pe propaze vit, demann
-enn ofiser agrikol get plant-la."
+First decide what the farmer is asking in the latest message. Prior turns
+can explain a short follow-up, but never supply missing symptoms. If the
+topic switches away from plants, briefly explain your plant-only role in the
+selected language. Do not diagnose people or turn a personal symptom into a
+plant symptom. If the farmer simply names a plant, acknowledge it and ask
+what they would like help with. If a plant or local name is unfamiliar, ask
+for its other name, a description or a photo before giving specific advice.
+Local crop references identify matched names and sometimes a documented crop
+cycle. Do not attribute other facts to that guide or assume all plants are listed.
+For reported damage, tie any practical next check to an actual observation.
+Ask at most one focused question per turn and keep the spoken reply brief.
 
 Return exactly one JSON object with these keys:
 {
@@ -133,7 +124,5 @@ def build_conversation_prompt(
             if strict_language_retry
             else ""
         )
-        + "Return the required JSON object. Follow the five-part agricultural "
-        "response structure, use no more than 110 words, and ask two to four "
-        "focused questions when more information is needed."
+        + "Return the required JSON. Address the latest message and ask at most one focused question."
     )
