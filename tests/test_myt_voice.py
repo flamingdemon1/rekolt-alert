@@ -11,7 +11,8 @@ from backend.app.main import app
 from backend.app.services import myt_client
 
 
-def test_myt_record_confirm_chat_and_speak(monkeypatch):
+def test_myt_record_confirm_chat_and_speak(monkeypatch, caplog):
+    caplog.set_level("INFO", logger="uvicorn.error")
     settings = Settings(
         _env_file=None,
         AI_PROVIDER="myt",
@@ -41,15 +42,14 @@ def test_myt_record_confirm_chat_and_speak(monkeypatch):
             assert "My tomato leaves are yellow." in payload["messages"][1]["content"]
             reply = "How often do you water the tomato plant?"
             body = {
+                "usage": {"prompt_tokens": 120, "completion_tokens": 24},
                 "choices": [
                     {
                         "message": {
                             "content": json.dumps(
                                 {
-                                    "meaning_for_analysis_en": "My tomato leaves are yellow.",
                                     "reply_language": "en",
                                     "assistant_reply_en": reply,
-                                    "reply_text": reply,
                                     "recommended_product_ids": [],
                                     "uncertain_segments": [],
                                 }
@@ -91,3 +91,6 @@ def test_myt_record_confirm_chat_and_speak(monkeypatch):
     spoken = client.post(prefix + "/speech", json={"text": turn.json()["reply_text"]})
     assert spoken.content == audio
     assert paths == ["audio/transcriptions", "chat/completions", "audio/speech"]
+    assert "input_tokens=120 output_tokens=24" in caplog.text
+    assert "My tomato leaves are yellow." not in caplog.text
+    assert turn.json()["meaning_for_analysis_en"] == draft["corrected_transcript"]

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import re
 from dataclasses import dataclass
 from threading import RLock
@@ -603,13 +604,6 @@ class VoiceConversationService:
         )
         reference = latest_crop_reference(cleaned, farmer_history_text)
         context = {
-            "conversation_history": [
-                {
-                    "farmer_message_en": farmer,
-                    "assistant_reply_en": assistant,
-                }
-                for farmer, assistant in history_pairs
-            ],
             "current_case": case_context,
             "crop": reference["name"] if reference else None,
             "local_crop_reference": reference,
@@ -658,6 +652,7 @@ class VoiceConversationService:
 
         product_request = is_product_request(cleaned)
         if not model_language_ok and not product_request:
+            logging.getLogger("uvicorn.error").info("chat_retry stage=conversation reason=reply_language")
             payload = generate_payload(strict_retry=True)
             assistant_reply_en = self._required_text(
                 payload,

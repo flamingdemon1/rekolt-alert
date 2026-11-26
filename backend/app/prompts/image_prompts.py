@@ -40,6 +40,7 @@ Return exactly one JSON object:
   "recommended_product_ids": [],
   "uncertain_segments": []
 }
+For English input omit reply_text and meaning_for_analysis_en; the app derives both.
 Do not use markdown or add keys. Keep the reply under 45 words and two short
 sentences.
 """.strip()

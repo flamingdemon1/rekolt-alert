@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from typing import Any, Protocol
 
@@ -123,13 +124,6 @@ class ImageAnalysisService:
         )
         reference = latest_crop_reference(cleaned, farmer_history_text)
         prompt_context = {
-            "conversation_history": [
-                {
-                    "farmer_message_en": farmer,
-                    "assistant_reply_en": assistant,
-                }
-                for farmer, assistant in history_pairs
-            ],
             "current_case": previous_case_context,
             "crop": reference["name"] if reference else None,
             "local_crop_reference": reference,
@@ -159,16 +153,12 @@ class ImageAnalysisService:
             return VoiceConversationService._parse_response(raw_response)
 
         payload = generate_payload(strict_retry=False)
-        model_reply_text = VoiceConversationService._required_text(
-            payload,
-            "reply_text",
-        )
         assistant_reply_en = VoiceConversationService._required_text(
             payload,
             "assistant_reply_en",
         )
         reply_text = (
-            assistant_reply_en if language == "en" else model_reply_text
+            assistant_reply_en if language == "en" else VoiceConversationService._required_text(payload, "reply_text")
         )
         language_ok = True
         try:
@@ -179,17 +169,14 @@ class ImageAnalysisService:
             language_ok = False
         product_request = is_product_request(cleaned)
         if not language_ok and not product_request:
+            logging.getLogger("uvicorn.error").info("chat_retry stage=image_analysis reason=reply_language")
             payload = generate_payload(strict_retry=True)
-            model_reply_text = VoiceConversationService._required_text(
-                payload,
-                "reply_text",
-            )
             assistant_reply_en = VoiceConversationService._required_text(
                 payload,
                 "assistant_reply_en",
             )
             reply_text = (
-                assistant_reply_en if language == "en" else model_reply_text
+                assistant_reply_en if language == "en" else VoiceConversationService._required_text(payload, "reply_text")
             )
             VoiceConversationService._reply_language(payload, language)
             if not response_matches_language(reply_text, language):

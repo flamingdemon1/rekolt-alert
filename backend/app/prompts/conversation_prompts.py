@@ -64,11 +64,12 @@ Return exactly one JSON object with these keys:
   "recommended_product_ids": [],
   "uncertain_segments": []
 }
+For English input omit reply_text and meaning_for_analysis_en; the app derives both.
 Do not use markdown or add keys. recommended_product_ids must contain only IDs
 from available_shop_products and must be empty when no catalogue product is a
 reasonable match. Put only genuinely uncertain source segments in
 uncertain_segments. Keep reply_text and assistant_reply_en concise, at no more
-than 110 words each.
+than 110 words each. For simple spoken turns prefer one or two short sentences.
 If the message is only a greeting, reply with one brief greeting and ask which
 crop the farmer grows; keep that reply under 12 words.
 """.strip()
@@ -100,7 +101,6 @@ def build_conversation_prompt(
         for farmer, assistant in history
     ]
     encoded_context = context or {
-        "conversation_history": encoded_history,
         "current_case": {},
         "crop": None,
         "observations": [],

@@ -1,6 +1,8 @@
 """my.t chat, transcription and speech adapters for Dokter Plant."""
 
 import base64
+import logging
+from time import monotonic
 
 import requests
 
@@ -10,6 +12,9 @@ from backend.app.services.speech_service import (
     prepare_english_transcript,
     prepare_morisien_transcript,
 )
+
+
+_log = logging.getLogger("uvicorn.error")
 
 
 class MytClient:
@@ -27,6 +32,8 @@ class MytClient:
             raise RuntimeError(
                 "Configure MYT_BASE_URL and MYT_API_KEY in the backend .env"
             )
+        started = monotonic()
+        status = "network_error"
         try:
             response = requests.post(
                 f"{base}/{path}",
@@ -35,8 +42,12 @@ class MytClient:
                 allow_redirects=False,
                 **kwargs,
             )
+            status = response.status_code
         except requests.RequestException as error:
             raise RuntimeError("Could not reach my.t AI Cloud") from error
+        finally:
+            _log.info("myt_request stage=%s status=%s elapsed_ms=%d", path, status,
+                      round((monotonic() - started) * 1000))
         if not 200 <= response.status_code < 300:
             raise RuntimeError(f"my.t {path} returned HTTP {response.status_code}")
         return response
@@ -70,9 +81,16 @@ class MytClient:
             payload["response_format"] = {"type": "json_object"}
         response = self._post("chat/completions", json=payload)
         try:
-            reply = response.json()["choices"][0]["message"]["content"]
+            result = response.json()
+            reply = result["choices"][0]["message"]["content"]
         except (KeyError, ValueError, IndexError, TypeError) as error:
             raise RuntimeError("my.t returned an invalid chat response") from error
+        usage = result.get("usage")
+        if isinstance(usage, dict):
+            counts = [usage.get(k) for k in ("prompt_tokens", "completion_tokens")]
+            _log.info("myt_usage model=%s input_tokens=%s output_tokens=%s",
+                      self.settings.MYT_CHAT_MODEL,
+                      *(n if type(n) is int else "unknown" for n in counts))
         if not isinstance(reply, str) or not reply.strip():
             raise RuntimeError("my.t returned an empty chat reply")
         return reply.strip()
