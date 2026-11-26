@@ -988,6 +988,25 @@ def test_gemma_client_uses_fallback_without_waiting() -> None:
     assert delays == []
 
 
+def test_hosted_client_rejects_deadline_below_provider_minimum() -> None:
+    with pytest.raises(ValueError, match="at least 10 seconds"):
+        GoogleGemmaClient(api_key="test-key", model_name="test", request_timeout_ms=8_000)
+
+
+def test_conversation_uses_another_family_after_high_demand(monkeypatch) -> None:
+    from backend.app.api import language
+
+    monkeypatch.setenv("GEMMA_API_KEY", "test")
+    monkeypatch.setattr(language, "settings", Settings(_env_file=None))
+    client = language._fast_conversation_client.__wrapped__()
+    assert client.fallback_model_names[0] == "gemini-3.1-flash-lite"
+    models = FakeProviderModels([FakeProviderError(503)])
+    client._client = FakeProviderClient(models)
+    client._types = FakeProviderTypes()
+    assert client.generate_text(system_instruction="Test", prompt="Test") == "CONNECTION_OK"
+    assert models.call_count == 2
+
+
 def test_gemma_client_uses_fallback_after_provider_timeout() -> None:
     """A provider timeout switches to the configured fallback model."""
 

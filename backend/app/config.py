@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     GEMMA_API_KEY: SecretStr | None = None
     GEMMA_MODEL_NAME: str = "gemma-4-26b-a4b-it"
     GEMMA_FALLBACK_MODEL_NAME: str = "gemma-4-31b-it"
+    CONVERSATION_FALLBACK_MODEL: str = "gemini-3.1-flash-lite"
     MAX_UPLOAD_MB: int = 10
     CORS_ORIGINS: str = (
         "http://localhost:3000,http://127.0.0.1:3000,"

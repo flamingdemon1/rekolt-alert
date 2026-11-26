@@ -2,11 +2,12 @@
 
 import asyncio
 from contextlib import asynccontextmanager
+from html import escape
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from pydantic import BaseModel
 
 from backend.app.api.health import router as health_router
@@ -46,6 +47,22 @@ _VOICE_TEST_PAGE = (
 
 
 if settings.APP_ENV.casefold() == "development":
+
+    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+    def development_home() -> str:
+        """Help developers who open Uvicorn's startup address reach the app."""
+        links = "".join(
+            f'<li><a href="{escape(origin)}/check-plant">{escape(origin)}/check-plant</a></li>'
+            for origin in settings.cors_origins
+            if origin.startswith(("http://localhost:", "http://127.0.0.1:"))
+        )
+        return (
+            "<!doctype html><html lang=en><title>Rékolt Alert</title>"
+            "<h1>Rékolt Alert backend is running</h1>"
+            "<p>Open Dokter Plant on the port printed by npm run dev.</p>"
+            f"<ul>{links}</ul>"
+            '<p><a href="/api/v1/health">Backend health</a></p></html>'
+        )
 
     @app.get("/dev/voice-test", include_in_schema=False)
     def voice_test_page() -> FileResponse:

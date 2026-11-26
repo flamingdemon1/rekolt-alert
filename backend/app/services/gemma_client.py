@@ -43,8 +43,8 @@ class GoogleGemmaClient:
             raise ValueError("maximum_attempts must be at least 1")
         if maximum_output_tokens < 1:
             raise ValueError("maximum_output_tokens must be at least 1")
-        if request_timeout_ms < 1:
-            raise ValueError("request_timeout_ms must be at least 1")
+        if request_timeout_ms < 10_000:
+            raise ValueError("Hosted requests require a deadline of at least 10 seconds")
         if thinking_level not in {None, "minimal", "high"}:
             raise ValueError(
                 "thinking_level must be minimal, high, or None"
@@ -85,6 +85,7 @@ class GoogleGemmaClient:
             api_key=self.api_key,
             http_options=types.HttpOptions(
                 timeout=self.request_timeout_ms,
+                retry_options=types.HttpRetryOptions(attempts=1),
             ),
         )
         self._types = types
@@ -190,9 +191,12 @@ class GoogleGemmaClient:
                         status_code in _RETRYABLE_STATUS_CODES
                         or is_timeout
                     )
+                    if status_code == 404 and has_fallback:
+                        break
                     if not is_retryable:
                         raise RuntimeError(
-                            "The hosted Gemma request could not be completed"
+                            "The hosted model request could not be completed "
+                            f"(provider status {status_code or 'unknown'})."
                         ) from error
                     last_provider_error = error
                     if has_fallback:
@@ -202,7 +206,8 @@ class GoogleGemmaClient:
                         or attempt == self.maximum_attempts - 1
                     ):
                         raise RuntimeError(
-                            "The hosted Gemma request could not be completed"
+                            "The AI service is temporarily unavailable "
+                            f"(provider status {status_code or 'timeout'}). Please retry."
                         ) from error
                     retry_delay = (
                         self.initial_retry_delay_seconds * (2**attempt)
