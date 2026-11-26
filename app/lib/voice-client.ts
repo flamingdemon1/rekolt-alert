@@ -689,6 +689,7 @@ export async function playAudioBlob(
     const decoded = await voicePlaybackContext.decodeAudioData(
       await audioBlob.arrayBuffer(),
     );
+    if (signal?.aborted) throw abortError();
     const source = voicePlaybackContext.createBufferSource();
     source.buffer = decoded;
     source.connect(voicePlaybackContext.destination);

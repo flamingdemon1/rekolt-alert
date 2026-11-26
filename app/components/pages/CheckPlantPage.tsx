@@ -52,7 +52,7 @@ const doctorCopy = {
     listening: "Mo pe ekout ou…",
     conversation: "Koumans enn konversasion lavwa",
     imageDescription:
-      "Azout osi enn deskripsion text pou Gemma analiz foto-la dan so konteks.",
+      "Dir mwa ki ou finn remarke lor plant-la.",
     voiceUnsupported:
       "Sa browser-la pa soutenir dikte vokal. Ou kapav ekrir ou mesaz.",
     speak: "Lir repons-la",
@@ -88,7 +88,7 @@ const doctorCopy = {
     listening: "Listening to you…",
     conversation: "Start a hands-free voice conversation",
     imageDescription:
-      "Add a written description so Gemma can analyse the image in context.",
+      "Tell me what you noticed on the plant.",
     voiceUnsupported:
       "Voice dictation is not supported by this browser. You can type your message instead.",
     speak: "Read this reply aloud",

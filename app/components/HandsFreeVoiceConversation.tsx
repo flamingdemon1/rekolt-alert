@@ -38,19 +38,19 @@ const phaseCopy: Record<
     },
     listening: {
       title: "Mo pe ekout ou",
-      detail: "Koz normalman; mo pou reponn kan ou fini",
+      detail: "Koz kouma ou abitie.",
     },
     transcribing: {
-      title: "MMS pe ekout recording-la",
-      detail: "Mo pe transkrir…",
+      title: "Mo finn tann ou",
+      detail: "",
     },
     thinking: {
-      title: "Gemma pe analiz ou mesaz",
-      detail: "Mo pe prepar repons…",
+      title: "Mo pe prepar ou repons",
+      detail: "",
     },
     speaking: {
       title: "Dokter Plant pe koze",
-      detail: "Ekout repons-la",
+      detail: "Tap mikro si ou anvi koze.",
     },
     error: {
       title: "Mo pa finn kapav kontinie",
@@ -65,19 +65,19 @@ const phaseCopy: Record<
     },
     listening: {
       title: "I am listening",
-      detail: "Speak naturally; I will answer when you finish",
+      detail: "Speak when you’re ready.",
     },
     transcribing: {
-      title: "MMS is processing the recording",
-      detail: "Transcribing…",
+      title: "I heard you",
+      detail: "",
     },
     thinking: {
-      title: "Gemma is reviewing your message",
-      detail: "Preparing a reply…",
+      title: "Getting your reply ready",
+      detail: "",
     },
     speaking: {
       title: "Dokter Plant is speaking",
-      detail: "Listen to the reply",
+      detail: "Tap the microphone to interrupt.",
     },
     error: {
       title: "I could not continue",
@@ -89,9 +89,11 @@ const phaseCopy: Record<
 function VoiceGlyph({
   phase,
   onActivate,
+  label,
 }: {
   phase: VoicePhase;
   onActivate: () => void;
+  label: string;
 }) {
   return (
     <div className={`voice-stage phase-${phase}`}>
@@ -99,9 +101,9 @@ function VoiceGlyph({
       <span aria-hidden="true" className="voice-orbit voice-orbit-two" />
       <span aria-hidden="true" className="voice-level-ring" />
       <button
-        aria-label="Start listening"
+        aria-label={label}
         className="voice-core voice-core-action"
-        disabled={phase !== "idle" && phase !== "error"}
+        disabled={phase !== "idle" && phase !== "error" && phase !== "speaking"}
         onClick={onActivate}
         type="button"
       >
@@ -140,6 +142,7 @@ export function HandsFreeVoiceConversation({
   const activeRef = useRef(false);
   const runningRef = useRef(false);
   const sessionAbortRef = useRef<AbortController | null>(null);
+  const playbackAbortRef = useRef<AbortController | null>(null);
   const onTurnRef = useRef(onTurn);
   const caseIdRef = useRef<string | undefined>(undefined);
 
@@ -190,12 +193,20 @@ export function HandsFreeVoiceConversation({
       onTurnRef.current?.(turn);
 
       if (!activeRef.current) return false;
+      const playback = new AbortController();
+      playbackAbortRef.current = playback;
       setPhase("speaking");
-      await speakConversationReply(
-        turn.reply_text,
-        turn.reply_language === "mfe" ? "mfe" : "en",
-        signal,
-      );
+      try {
+        await speakConversationReply(
+          turn.reply_text,
+          turn.reply_language === "mfe" ? "mfe" : "en",
+          playback.signal,
+        );
+      } catch (error) {
+        if (!playback.signal.aborted) throw error;
+      } finally {
+        playbackAbortRef.current = null;
+      }
 
       if (!activeRef.current) return false;
       runningRef.current = false;
@@ -222,7 +233,7 @@ export function HandsFreeVoiceConversation({
     while (activeRef.current) {
       const completed = await runConversationTurn();
       if (!completed || !activeRef.current) return;
-      await new Promise((resolve) => window.setTimeout(resolve, 250));
+
     }
   }, [runConversationTurn]);
 
@@ -234,13 +245,14 @@ export function HandsFreeVoiceConversation({
     const timer = window.setTimeout(() => {
       setPhase("idle");
       void runConversationSession();
-    }, 350);
+    }, 0);
 
     return () => {
       window.clearTimeout(timer);
       activeRef.current = false;
       runningRef.current = false;
       sessionAbortRef.current?.abort();
+      playbackAbortRef.current?.abort();
       window.speechSynthesis?.cancel();
     };
   }, [runConversationSession]);
@@ -248,6 +260,10 @@ export function HandsFreeVoiceConversation({
   const copy = phaseCopy[language][phase];
 
   const retry = () => {
+    if (playbackAbortRef.current) {
+      playbackAbortRef.current.abort();
+      return;
+    }
     if (!activeRef.current || runningRef.current) return;
     void runConversationSession();
   };
@@ -287,7 +303,11 @@ export function HandsFreeVoiceConversation({
           </strong>
         </div>
 
-        <VoiceGlyph phase={phase} onActivate={retry} />
+        <VoiceGlyph
+          phase={phase}
+          onActivate={retry}
+          label={phase === "speaking" ? phaseCopy[language].speaking.detail : phaseCopy[language].idle.detail}
+        />
 
         <div aria-live="polite" className="voice-conversation-copy">
           <span>
@@ -298,7 +318,7 @@ export function HandsFreeVoiceConversation({
               : "Dokter Plant"}
           </span>
           <h2>{copy.title}</h2>
-          <p>{copy.detail}</p>
+          {copy.detail && <p>{copy.detail}</p>}
           {heardText ? (
             <p className="voice-live-transcript">
               <strong>{language === "mfe" ? "Mo finn tann:" : "I heard:"}</strong>{" "}
