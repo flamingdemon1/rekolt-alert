@@ -1,13 +1,14 @@
 """FastAPI entry point for the Rekolt Alert backend."""
 
 import asyncio
+import os
 from contextlib import asynccontextmanager
 from html import escape
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from pydantic import BaseModel
 
 from backend.app.api.health import router as health_router
@@ -51,6 +52,9 @@ if settings.APP_ENV.casefold() == "development":
     @app.get("/", response_class=HTMLResponse, include_in_schema=False)
     def development_home() -> str:
         """Help developers who open Uvicorn's startup address reach the app."""
+        local_port = os.getenv("REKOLT_LOCAL_WEB_PORT", "")
+        if local_port.isdigit() and 0 < int(local_port) < 65536:
+            return RedirectResponse(f"http://127.0.0.1:{local_port}/check-plant")
         links = "".join(
             f'<li><a href="{escape(origin)}/check-plant">{escape(origin)}/check-plant</a></li>'
             for origin in settings.cors_origins

@@ -45,6 +45,7 @@ export default defineConfig(async () => {
 
   return {
     server: {
+      strictPort: Boolean(process.env.REKOLT_LOCAL_WEB_PORT),
       watch: {
         ...(isCodexSeatbeltSandbox
           ? { useFsEvents: false, usePolling: true }
